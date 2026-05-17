@@ -1,0 +1,52 @@
+---
+const links = [
+  { href: "/rooms/", label: "Rooms" },
+  { href: "/availability/", label: "Availability" },
+  { href: "/the-house/", label: "The House" },
+  { href: "/area/", label: "The Area" },
+  { href: "/faq/", label: "FAQ" },
+  { href: "/contact/", label: "Contact" },
+];
+const path = Astro.url.pathname;
+---
+
+<header class="border-b border-forest-100 bg-cream-50/90 backdrop-blur sticky top-0 z-30">
+  <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between gap-6">
+    <a href="/" class="flex items-center gap-2 font-display text-xl text-forest-800">
+      <svg viewBox="0 0 32 32" class="w-7 h-7" aria-hidden="true">
+        <path d="M16 3c-2 4-6 6-6 11 0 3 2 5 4 6v3h4v-3c2-1 4-3 4-6 0-5-4-7-6-11z" fill="var(--color-forest-600)"/>
+        <path d="M14 23h4v6h-4z" fill="var(--color-wood-600)"/>
+      </svg>
+      <span>Sycamore Getaway</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-forest-800">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class={`hover:text-forest-600 transition-colors ${path.startsWith(l.href) ? "text-forest-600" : ""}`}
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+    <a
+      href="#book"
+      class="hidden md:inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-4 py-2 text-sm font-medium transition-colors"
+    >
+      Book a room
+    </a>
+    <details class="md:hidden">
+      <summary class="list-none cursor-pointer p-2 -mr-2" aria-label="Menu">
+        <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </summary>
+      <div class="absolute right-3 mt-2 w-56 rounded-2xl border border-forest-100 bg-cream-50 shadow-lg p-2">
+        {links.map((l) => (
+          <a href={l.href} class="block px-3 py-2 rounded-lg text-forest-800 hover:bg-forest-50">{l.label}</a>
+        ))}
+        <a href="#book" class="block mt-1 px-3 py-2 rounded-lg bg-forest-700 text-white text-center">Book a room</a>
+      </div>
+    </details>
+  </div>
+</header>

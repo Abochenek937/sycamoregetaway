@@ -1,0 +1,458 @@
+---
+import Base from "../layouts/Base.astro";
+import RoomCard from "../components/RoomCard.astro";
+import AvailabilityGrid from "../components/AvailabilityGrid.astro";
+import { ROOMS, PROPERTY } from "../data/rooms";
+import { getAvailability } from "../lib/availability";
+import { isDateBlocked, todayYmd } from "../lib/ical";
+
+// --- Quick availability summary for the hero/glance section ---
+const availability = await getAvailability();
+const today = todayYmd();
+const openNow = ROOMS.filter((r) => {
+  const a = availability.find((x) => x.slug === r.slug);
+  return !isDateBlocked(today, a?.bookings ?? []);
+}).length;
+
+// --- Cost comparison (monthly, 30-night basis) ---
+const NIGHTS = 30;
+const AIRBNB_GUEST_FEE_RATE = 0.14;
+
+function guestMonthly(nightly: number) {
+  return Math.round(nightly * NIGHTS * (1 + AIRBNB_GUEST_FEE_RATE));
+}
+
+const MASTER_NIGHTLY = 44;
+const ROOM_NIGHTLY = 35;
+
+const usMaster = guestMonthly(MASTER_NIGHTLY);
+const usRoom = guestMonthly(ROOM_NIGHTLY);
+
+const hotel = {
+  room: 130 * NIGHTS,
+  parking: 18 * NIGHTS,
+  total() { return this.room + this.parking; },
+};
+
+const apt = {
+  rent: 1100,
+  utilities: 195,
+  water: 45,
+  internet: 70,
+  trash: 25,
+  parking: 0,
+  rentersInsurance: 15,
+  furnitureRental: 200,
+  deposit: 92,
+  total() { return this.rent + this.utilities + this.water + this.internet + this.trash + this.parking + this.rentersInsurance + this.furnitureRental + this.deposit; },
+};
+
+const hotelMonthly = hotel.total();
+const aptMonthly = apt.total();
+
+const compareRows = [
+  { label: "Room / rent (Airbnb price incl. fees)", room: `$${usRoom.toLocaleString()}`, master: `$${usMaster.toLocaleString()}`, hotel: `$${hotel.room.toLocaleString()}`, apt: `$${apt.rent.toLocaleString()}` },
+  { label: "Electric + gas",                       room: "Included", master: "Included", hotel: "Included", apt: `$${apt.utilities}` },
+  { label: "Water + sewer",                        room: "Included", master: "Included", hotel: "Included", apt: `$${apt.water}` },
+  { label: "Internet (fast Wi-Fi)",                room: "Included", master: "Included", hotel: "Sometimes", apt: `$${apt.internet}` },
+  { label: "Trash",                                room: "Included", master: "Included", hotel: "Included", apt: `$${apt.trash}` },
+  { label: "Parking",                              room: "Free",     master: "Free",     hotel: `$${hotel.parking.toLocaleString()}`, apt: "Free" },
+  { label: "Furniture",                            room: "Furnished", master: "Furnished", hotel: "Furnished", apt: `$${apt.furnitureRental} (rental)` },
+  { label: "Renter's insurance",                   room: "—",        master: "—",        hotel: "—",         apt: `$${apt.rentersInsurance}` },
+  { label: "Security deposit (amortized)",         room: "—",        master: "—",        hotel: "—",         apt: `$${apt.deposit}` },
+  { label: "Lease required",                       room: "No — 22-night min", master: "No — 22-night min", hotel: "No", apt: "12 months typical" },
+  { label: "Flexible cancellation",                room: "Cancel through end of month", master: "Cancel through end of month", hotel: "Usually 24–48h notice", apt: "Locked in — break fees apply" },
+  { label: "Cleaning fee",                         room: "$0 — none", master: "$0 — none", hotel: "$15–30 resort fee", apt: "$150–300 move-out" },
+  { label: "Rate lock (no rent hikes)",            room: "Locked for your stay", master: "Locked for your stay", hotel: "Rate changes nightly", apt: "Renewal hike at end of lease" },
+  { label: "Full kitchen",                         room: "Yes",      master: "Yes",      hotel: "No",        apt: "Yes" },
+  { label: "Wooded acreage",                       room: "6 acres + 55 next door", master: "6 acres + 55 next door", hotel: "Parking lot", apt: "Apartment grid" },
+  { label: "Cleaning / maintenance",               room: "Handled",  master: "Handled",  hotel: "Handled",   apt: "You handle it" },
+];
+
+const audiences = [
+  { title: "Travel nurses", body: "13-week contracts at Kettering, Miami Valley, Premier Health, or Dayton Children's. Quiet sleep between night shifts, full kitchen, flexible cancellation if your contract ends early." },
+  { title: "Construction crews", body: "Project teams working sites in the Dayton metro. King beds, free parking for the trucks, and space to actually rest after a long day." },
+  { title: "Students & interns", body: "Wright State, Sinclair, UD, and summer interns at Wright-Patt. Cheaper than a sublease, no lease, fast Wi-Fi." },
+  { title: "Relocating to Dayton", body: "Between houses or waiting on closing? Cheaper than a hotel, no 12-month lease, leave the month your house is ready." },
+];
+
+// Quick property photo strip — pulls one hero image from each room (avoids the Maple block — we still use the photo).
+const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
+---
+
+<Base>
+  {/* ──────────── 1. HERO ──────────── */}
+  <section class="relative bg-forest-900 text-cream-50 overflow-hidden">
+    <img
+      src="/photos/sycamore/01.jpeg"
+      alt="Sycamore Getaway property"
+      class="absolute inset-0 w-full h-full object-cover opacity-55"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-forest-900/70 via-forest-900/50 to-forest-900/95" aria-hidden="true"></div>
+    <div class="relative max-w-6xl mx-auto px-5 py-24 md:py-36">
+      <p class="font-medium tracking-wider uppercase text-cream-200/80 text-sm">{PROPERTY.city}</p>
+      <h1 class="font-display text-5xl md:text-7xl mt-3 leading-[1.05] max-w-3xl">
+        A quiet, modern house in the woods.
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-cream-100/90 max-w-2xl">
+        Long stays for travel nurses, construction crews, students, and people in transition.
+        From <strong>${ROOM_NIGHTLY}/night</strong>, no lease, no cleaning fee.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="#rooms"
+          class="inline-flex items-center rounded-full bg-cream-50 text-forest-800 px-6 py-3 font-medium hover:bg-cream-100 transition-colors"
+        >
+          See available rooms
+          <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────── 2. AVAILABILITY GLANCE ──────────── */}
+  <section class="max-w-6xl mx-auto px-5 py-16">
+    <div class="text-center mb-8">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Live from Airbnb</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">
+        {openNow > 0 ? `${openNow} of ${PROPERTY.bedrooms} rooms open today.` : 'Rooms book up — see what\'s coming open.'}
+      </h2>
+      <p class="mt-3 max-w-2xl mx-auto text-forest-800/85">
+        Synced from each room's Airbnb calendar. Green = available, brown = booked.
+      </p>
+    </div>
+    <AvailabilityGrid />
+  </section>
+
+  {/* ──────────── 3. THE PROPERTY (quick orient) ──────────── */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-5xl mx-auto px-5 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The Property</p>
+        <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">
+          5 private rooms in a U-shaped house on 6 wooded acres.
+        </h2>
+        <p class="mt-5 text-forest-800/90 leading-relaxed">
+          Southwest Dayton, next to Jefferson Township High School. Shared kitchen, two common
+          bathrooms, central deck, seasonal pool. Long stays only — 22-night minimum, perfect
+          for travel contracts and relocations.
+        </p>
+        <div class="mt-6 grid grid-cols-3 gap-4 text-sm">
+          <div>
+            <div class="font-display text-2xl text-forest-900">{PROPERTY.bedrooms}</div>
+            <div class="text-forest-700/80">Private rooms</div>
+          </div>
+          <div>
+            <div class="font-display text-2xl text-forest-900">{PROPERTY.acres}</div>
+            <div class="text-forest-700/80">Acres</div>
+          </div>
+          <div>
+            <div class="font-display text-2xl text-forest-900">{PROPERTY.effectiveAcres}+</div>
+            <div class="text-forest-700/80">Wooded around</div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        {photoStrip.slice(0, 4).map((src, i) => (
+          <img src={src} alt={`Sycamore Getaway photo ${i+1}`} loading="lazy" class={`rounded-2xl object-cover aspect-square w-full ${i === 0 ? 'col-span-2 aspect-[2/1]' : ''}`} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────── 4. WHO IT'S FOR ──────────── */}
+  <section class="max-w-6xl mx-auto px-5 py-16">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium text-center">Who stays here</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900 text-center">Built for the long stay.</h2>
+    <p class="mt-3 text-center max-w-2xl mx-auto text-forest-800/85">
+      A 22-night minimum keeps the house calm. We're a great fit for people who actually live
+      here for a month or two at a time.
+    </p>
+    <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+      {audiences.map((a) => (
+        <div class="rounded-3xl border border-forest-100 bg-white p-6">
+          <h3 class="font-display text-xl text-forest-900">{a.title}</h3>
+          <p class="mt-3 text-sm text-forest-800/85 leading-relaxed">{a.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* ──────────── 5. THE ROOMS ──────────── */}
+  <section id="rooms" class="bg-cream-100 py-16">
+    <div class="max-w-6xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Five rooms, five trees</p>
+        <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Pick your room.</h2>
+        <p class="mt-3 max-w-2xl mx-auto text-forest-800/85">
+          Each room is individually bookable on Airbnb. Tap any room for details and live calendar.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {ROOMS.map((room) => <RoomCard room={room} />)}
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────── 6. THREE PILLARS ──────────── */}
+  <section class="max-w-6xl mx-auto px-5 py-16">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium text-center">What makes it different</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900 text-center">Three things a hotel and an apartment can't promise.</h2>
+    <div class="mt-10 grid md:grid-cols-3 gap-4">
+      <div class="rounded-3xl bg-gradient-to-br from-wood-50 to-cream-100 border border-wood-200 p-6">
+        <div class="w-12 h-12 rounded-2xl bg-wood-500 text-cream-50 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+        </div>
+        <p class="uppercase tracking-wider text-wood-700 text-xs font-medium mt-4">No lease lock-in</p>
+        <h3 class="font-display text-xl mt-1 text-forest-900">Cancel through end of month.</h3>
+        <p class="mt-3 text-forest-800/90 leading-relaxed text-sm">
+          A 12-month apartment lease leaves you on the hook for thousands if your contract gets cut.
+          We don't.
+        </p>
+      </div>
+      <div class="rounded-3xl bg-gradient-to-br from-forest-50 to-cream-100 border border-forest-200 p-6">
+        <div class="w-12 h-12 rounded-2xl bg-forest-600 text-cream-50 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+        </div>
+        <p class="uppercase tracking-wider text-forest-700 text-xs font-medium mt-4">$0 cleaning fee</p>
+        <h3 class="font-display text-xl mt-1 text-forest-900">The price you see is the price.</h3>
+        <p class="mt-3 text-forest-800/90 leading-relaxed text-sm">
+          Most Airbnbs slap $100–200 on at checkout. Hotels add resort fees. Apartments charge
+          move-out cleaning. We charge zero.
+        </p>
+      </div>
+      <div class="rounded-3xl bg-gradient-to-br from-cream-100 to-forest-50 border border-forest-200 p-6">
+        <div class="w-12 h-12 rounded-2xl bg-forest-700 text-cream-50 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        </div>
+        <p class="uppercase tracking-wider text-forest-700 text-xs font-medium mt-4">Rate lock</p>
+        <h3 class="font-display text-xl mt-1 text-forest-900">Your rate doesn't go up. Ever.</h3>
+        <p class="mt-3 text-forest-800/90 leading-relaxed text-sm">
+          Apartments hit you with a renewal hike every 12 months. Hotels change rates nightly.
+          Your booked rate is your rate.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────── 7. COST COMPARISON (the closer) ──────────── */}
+  <section id="compare" class="bg-cream-100 py-16">
+    <div class="max-w-6xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium text-center">The real monthly cost</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900 text-center">
+        From ${ROOM_NIGHTLY}/night. The math gets ugly for everyone else.
+      </h2>
+      <p class="mt-4 text-center text-forest-800/85 max-w-3xl mx-auto">
+        30 nights — what you'd actually pay for a month — across a hotel, a 1-bedroom apartment,
+        and us. Apartment numbers include everything: utilities, water, internet, trash, renter's
+        insurance, furniture rental, amortized deposit.
+      </p>
+
+      <div class="mt-10 grid md:grid-cols-4 gap-4">
+        <div class="rounded-3xl bg-white border border-forest-100 p-6">
+          <p class="text-forest-600 text-sm">Mid-range hotel</p>
+          <p class="font-display text-4xl text-forest-900 mt-2">${hotelMonthly.toLocaleString()}<span class="text-lg text-forest-600/70">/mo</span></p>
+          <p class="mt-3 text-xs text-forest-700/80">Room + parking. No kitchen.</p>
+        </div>
+        <div class="rounded-3xl bg-white border border-forest-100 p-6">
+          <p class="text-forest-600 text-sm">1BR apartment</p>
+          <p class="font-display text-4xl text-forest-900 mt-2">${aptMonthly.toLocaleString()}<span class="text-lg text-forest-600/70">/mo</span></p>
+          <p class="mt-3 text-xs text-forest-700/80">All-in. 12-month lease.</p>
+        </div>
+        <div class="rounded-3xl bg-forest-700 text-cream-50 p-6 border-2 border-wood-500 relative">
+          <div class="absolute -top-3 left-6 bg-wood-500 text-forest-900 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider">Best value</div>
+          <p class="text-cream-200/80 text-sm">Standard room</p>
+          <p class="font-display text-4xl mt-2">${usRoom.toLocaleString()}<span class="text-lg text-cream-200/70">/mo</span></p>
+          <p class="mt-3 text-xs text-cream-100/90">${ROOM_NIGHTLY}/night + Airbnb fees. Everything included.</p>
+        </div>
+        <div class="rounded-3xl bg-forest-800 text-cream-50 p-6">
+          <p class="text-cream-200/80 text-sm">Master Suite</p>
+          <p class="font-display text-4xl mt-2">${usMaster.toLocaleString()}<span class="text-lg text-cream-200/70">/mo</span></p>
+          <p class="mt-3 text-xs text-cream-100/90">${MASTER_NIGHTLY}/night + Airbnb fees. Private bath + desk.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 grid sm:grid-cols-2 gap-4">
+        <div class="rounded-2xl bg-forest-100/60 border border-forest-200 p-5 text-center">
+          <p class="text-sm text-forest-700">A standard room vs. a 1BR apartment</p>
+          <p class="font-display text-2xl text-forest-900 mt-1">
+            Save <strong>${(aptMonthly - usRoom).toLocaleString()}</strong> a month
+          </p>
+        </div>
+        <div class="rounded-2xl bg-forest-100/60 border border-forest-200 p-5 text-center">
+          <p class="text-sm text-forest-700">The Master vs. a 1BR apartment</p>
+          <p class="font-display text-2xl text-forest-900 mt-1">
+            Save <strong>${(aptMonthly - usMaster).toLocaleString()}</strong> a month
+          </p>
+        </div>
+      </div>
+
+      <details class="mt-8 rounded-3xl border border-forest-100 bg-white">
+        <summary class="cursor-pointer list-none flex items-center justify-between gap-3 px-6 py-4 font-medium text-forest-900">
+          <span>See the full breakdown</span>
+          <svg class="w-5 h-5 text-forest-500 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="overflow-x-auto border-t border-forest-100">
+          <table class="w-full text-sm">
+            <thead class="bg-forest-50 text-forest-900">
+              <tr>
+                <th class="text-left font-medium px-5 py-4">Cost or feature (per month)</th>
+                <th class="text-left font-medium px-5 py-4 bg-forest-100">Standard room</th>
+                <th class="text-left font-medium px-5 py-4 bg-forest-100">Master Suite</th>
+                <th class="text-left font-medium px-5 py-4">Hotel</th>
+                <th class="text-left font-medium px-5 py-4">1BR apartment</th>
+              </tr>
+            </thead>
+            <tbody>
+              {compareRows.map((row, i) => (
+                <tr class={i % 2 ? "bg-cream-50" : ""}>
+                  <td class="px-5 py-3 font-medium text-forest-900">{row.label}</td>
+                  <td class="px-5 py-3 text-forest-800 bg-forest-100/30 font-medium">{row.room}</td>
+                  <td class="px-5 py-3 text-forest-800 bg-forest-100/30 font-medium">{row.master}</td>
+                  <td class="px-5 py-3 text-forest-800">{row.hotel}</td>
+                  <td class="px-5 py-3 text-forest-800">{row.apt}</td>
+                </tr>
+              ))}
+              <tr class="border-t-2 border-forest-300 bg-forest-50">
+                <td class="px-5 py-4 font-display text-lg text-forest-900">Monthly total</td>
+                <td class="px-5 py-4 font-display text-2xl text-forest-900 bg-forest-100">${usRoom.toLocaleString()}</td>
+                <td class="px-5 py-4 font-display text-2xl text-forest-900 bg-forest-100">${usMaster.toLocaleString()}</td>
+                <td class="px-5 py-4 font-display text-2xl text-forest-700">${hotelMonthly.toLocaleString()}</td>
+                <td class="px-5 py-4 font-display text-2xl text-forest-700">${aptMonthly.toLocaleString()}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  {/* ──────────── 8. PROPERTY DETAILS (emotional payoff) ──────────── */}
+  <section class="max-w-5xl mx-auto px-5 py-16">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium text-center">Why people stay</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900 text-center">Six acres of actual quiet.</h2>
+    <p class="mt-4 text-center text-forest-800/85 max-w-2xl mx-auto">
+      Sycamore Getaway sits on six wooded acres, bordering a private 55-acre forest. You wake
+      up to birds, not traffic.
+    </p>
+
+    {/* Sandy corner */}
+    <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
+      <div class="aspect-[4/3] rounded-3xl bg-gradient-to-br from-wood-300 via-wood-200 to-forest-200 relative overflow-hidden">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 120" class="w-3/4 opacity-70" aria-hidden="true">
+            <circle cx="160" cy="50" r="20" fill="var(--color-wood-500)" opacity="0.8"/>
+            <path d="M0 100 Q 50 80 100 95 T 200 100 V 120 H 0 Z" fill="var(--color-wood-400)"/>
+            <path d="M40 100 L 50 85 L 60 100 Z" fill="var(--color-forest-700)"/>
+            <path d="M50 100 L 60 80 L 70 100 Z" fill="var(--color-forest-800)"/>
+          </svg>
+        </div>
+        <div class="absolute bottom-3 left-3 text-xs text-forest-800 bg-cream-50/90 px-2.5 py-1 rounded-full">Photo coming soon</div>
+      </div>
+      <div>
+        <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The sandy corner</p>
+        <h3 class="font-display text-2xl md:text-3xl mt-2 text-forest-900">A natural sand clearing. A fire pit. Sunset.</h3>
+        <p class="mt-4 text-forest-800/90 leading-relaxed">
+          There's a natural sand deposit in the corner of the property — feels like a little beach
+          in the middle of the woods. Best spot for a fire and the way the trees frame the
+          western sky.
+        </p>
+      </div>
+    </div>
+
+    {/* Kitchen */}
+    <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
+      <div class="md:order-2 aspect-[4/3] rounded-3xl bg-gradient-to-br from-cream-200 via-wood-100 to-cream-100 relative overflow-hidden">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 200 120" class="w-3/4 opacity-70" aria-hidden="true">
+            <rect x="30" y="40" width="60" height="50" rx="4" fill="var(--color-wood-600)"/>
+            <rect x="35" y="45" width="20" height="40" fill="var(--color-cream-50)" opacity="0.4"/>
+            <rect x="100" y="60" width="70" height="30" rx="3" fill="var(--color-wood-500)"/>
+            <circle cx="135" cy="55" r="6" fill="var(--color-forest-700)"/>
+            <rect x="40" y="25" width="120" height="6" fill="var(--color-wood-700)"/>
+          </svg>
+        </div>
+        <div class="absolute bottom-3 left-3 text-xs text-forest-800 bg-cream-50/90 px-2.5 py-1 rounded-full">Photo coming soon</div>
+      </div>
+      <div class="md:order-1">
+        <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The shared kitchen</p>
+        <h3 class="font-display text-2xl md:text-3xl mt-2 text-forest-900">A real kitchen. Not a microwave and a mini-fridge.</h3>
+        <p class="mt-4 text-forest-800/90 leading-relaxed">
+          Full stove, oven, fridge, dishwasher, coffee setup, real counter space. Living somewhere
+          for a month is a totally different experience when you can meal-prep for the week.
+        </p>
+      </div>
+    </div>
+
+    {/* Wildlife */}
+    <div class="mt-16">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium text-center">What lives here</p>
+      <h3 class="font-display text-2xl md:text-3xl mt-2 text-forest-900 text-center">Spotted on the property.</h3>
+      <ul class="mt-8 grid grid-cols-3 md:grid-cols-6 gap-3 text-center">
+        {[
+          { name: "Deer", emoji: "🦌" },
+          { name: "Turkeys", emoji: "🦃" },
+          { name: "Owls", emoji: "🦉" },
+          { name: "Songbirds", emoji: "🐦" },
+          { name: "Frogs", emoji: "🐸" },
+          { name: "Bald eagle", emoji: "🦅" },
+        ].map((w) => (
+          <li class="rounded-2xl bg-white border border-forest-100 p-3">
+            <div class="text-2xl">{w.emoji}</div>
+            <div class="mt-1 text-xs font-medium text-forest-900">{w.name}</div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* ──────────── 9. HOW BOOKING WORKS ──────────── */}
+  <section class="bg-cream-100 py-16">
+    <div class="max-w-5xl mx-auto px-5">
+      <h2 class="font-display text-3xl text-forest-900 text-center">How booking works</h2>
+      <div class="mt-10 grid md:grid-cols-3 gap-6">
+        <div class="bg-white border border-forest-100 rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-full bg-forest-100 text-forest-700 flex items-center justify-center font-display">1</div>
+          <h3 class="font-display text-xl mt-4 text-forest-900">Book on Airbnb</h3>
+          <p class="mt-2 text-forest-800/80 text-sm">
+            Every room is on Airbnb. Real-time calendar, AirCover, easy messaging. 22-night minimum.
+          </p>
+        </div>
+        <div class="bg-white border border-forest-100 rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-full bg-forest-100 text-forest-700 flex items-center justify-center font-display">2</div>
+          <h3 class="font-display text-xl mt-4 text-forest-900">Self check-in</h3>
+          <p class="mt-2 text-forest-800/80 text-sm">
+            Smart lock code arrives the day of your stay. The host lives in a separate detached
+            suite — you'll rarely see him.
+          </p>
+        </div>
+        <div class="bg-white border border-forest-100 rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-full bg-forest-100 text-forest-700 flex items-center justify-center font-display">3</div>
+          <h3 class="font-display text-xl mt-4 text-forest-900">Stayed before? Book direct.</h3>
+          <p class="mt-2 text-forest-800/80 text-sm">
+            Returning guests can <a href="/contact/" class="underline">email us</a> to skip the
+            Airbnb fees.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────── 10. FINAL CTA ──────────── */}
+  <section class="max-w-4xl mx-auto px-5 py-20 text-center">
+    <h2 class="font-display text-3xl md:text-4xl text-forest-900">Ready to book?</h2>
+    <p class="mt-4 text-forest-800/85 max-w-xl mx-auto">
+      Five rooms. Live calendar. ${ROOM_NIGHTLY}/night and up. Pick yours.
+    </p>
+    <a
+      href="#rooms"
+      class="mt-8 inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-7 py-3 font-medium transition-colors"
+    >
+      See available rooms
+      <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="mt-6 text-sm text-forest-700/70">
+      Or <a href="/faq/" class="underline">read the FAQ</a> if you have questions first.
+    </p>
+  </section>
+</Base>

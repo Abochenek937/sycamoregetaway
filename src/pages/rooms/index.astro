@@ -1,0 +1,19 @@
+---
+import Base from "../../layouts/Base.astro";
+import RoomCard from "../../components/RoomCard.astro";
+import { ROOMS } from "../../data/rooms";
+---
+
+<Base title="All Rooms" description="All five private rooms at Sycamore Getaway in Dayton, Ohio. Tree-themed, individually bookable on Airbnb.">
+  <section class="max-w-6xl mx-auto px-5 py-16">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Five rooms, five trees</p>
+    <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">All rooms</h1>
+    <p class="mt-4 max-w-2xl text-forest-800/90">
+      Each room is bookable individually on Airbnb. Book a single room, or coordinate
+      with friends to take over the whole house.
+    </p>
+    <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {ROOMS.map((room) => <RoomCard room={room} />)}
+    </div>
+  </section>
+</Base>

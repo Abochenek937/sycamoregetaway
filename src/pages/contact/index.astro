@@ -1,0 +1,36 @@
+---
+import Base from "../../layouts/Base.astro";
+import { PROPERTY } from "../../data/rooms";
+---
+
+<Base title="Contact" description="Get in touch with Sycamore Getaway — returning guests can book direct and skip Airbnb fees.">
+  <section class="max-w-2xl mx-auto px-5 py-16">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Contact</p>
+    <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">Stayed before? Book direct.</h1>
+    <p class="mt-6 text-forest-800/90 leading-relaxed">
+      First-time guests, please book through Airbnb — it gives us both the calendar accuracy and
+      AirCover protection. If you've stayed at Sycamore Getaway before, email us and we'll set you
+      up directly at a better rate.
+    </p>
+
+    <div class="mt-10 rounded-3xl border border-forest-100 bg-white p-8">
+      <p class="text-sm text-forest-700/80">Email</p>
+      <a href={`mailto:${PROPERTY.contactEmail}`} class="font-display text-2xl text-forest-900 underline underline-offset-4 decoration-forest-300 hover:decoration-forest-700">
+        {PROPERTY.contactEmail}
+      </a>
+      <p class="mt-6 text-sm text-forest-800/80">
+        Tell us:
+      </p>
+      <ul class="mt-2 text-sm text-forest-800/80 space-y-1 list-disc pl-5">
+        <li>Dates you want</li>
+        <li>Which room(s)</li>
+        <li>Number of guests</li>
+        <li>When you stayed last (helps us find you in the system)</li>
+      </ul>
+    </div>
+
+    <div class="mt-8 rounded-2xl bg-cream-100 border border-cream-200 p-6 text-sm text-forest-800/85">
+      <strong class="text-forest-900">New guest?</strong> Head to the <a href="/rooms/" class="underline">rooms page</a> and pick one — every room has a "View on Airbnb" link to book in real time.
+    </div>
+  </section>
+</Base>

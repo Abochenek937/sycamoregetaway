@@ -1,0 +1,78 @@
+---
+import Base from "../../layouts/Base.astro";
+
+const sections = [
+  {
+    title: "Where we are",
+    items: [
+      "Southwest Dayton, next to Jefferson Township High School",
+      "~15 minutes to downtown Dayton",
+      "~25 minutes to Wright-Patterson AFB",
+      "~30 minutes to Dayton International Airport",
+    ],
+  },
+  {
+    title: "Parks & nature",
+    items: [
+      "Germantown MetroPark — 10 minutes, miles of trails",
+      "Twin Creek MetroPark — 12 minutes, prairie + woodland",
+      "Possum Creek MetroPark — 8 minutes, easy walking",
+      "Carriage Hill MetroPark — 25 minutes, historic farm",
+    ],
+  },
+  {
+    title: "Food & coffee",
+    items: [
+      "The Dayton Beer Company — local craft brewery",
+      "Lily's Bistro — Oregon District favorite",
+      "Press Coffee Bar — downtown coffee + pastries",
+      "Salar Restaurant — Peruvian, Oregon District",
+    ],
+  },
+  {
+    title: "Things to do",
+    items: [
+      "National Museum of the US Air Force — free, world-class",
+      "Oregon Historic District — bars, shops, nightlife",
+      "Dayton Art Institute — riverfront museum",
+      "RiverScape MetroPark — events, fountains, ice rink in winter",
+    ],
+  },
+  {
+    title: "For long stays",
+    items: [
+      "Kroger — 12 minutes east for groceries",
+      "Kettering Health, Miami Valley, Premier Health — major hospitals nearby",
+      "Sinclair Community College, Wright State, UD — all within reach",
+      "Fast Wi-Fi at the house for remote work or telehealth",
+    ],
+  },
+];
+---
+
+<Base title="The Area" description="Southwest Dayton, Ohio — next to Jefferson Township High School. Parks, restaurants, museums, hospitals, and the practical stuff you need to know.">
+  <section class="max-w-5xl mx-auto px-5 py-16">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The Area</p>
+    <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">Southwest Dayton. Quiet, but close.</h1>
+    <p class="mt-6 text-lg text-forest-800/90 max-w-2xl">
+      You're next to Jefferson Township High School in southwest Dayton, surrounded by metro
+      parks but a short drive from downtown, the Air Force museum, and the major hospitals.
+      Exact address is shared with guests after booking.
+    </p>
+    <div class="mt-12 grid md:grid-cols-2 gap-8">
+      {sections.map((s) => (
+        <div class="rounded-3xl border border-forest-100 bg-white p-6">
+          <h3 class="font-display text-2xl text-forest-900">{s.title}</h3>
+          <ul class="mt-4 space-y-2 text-forest-800/85">
+            {s.items.map((i) => (
+              <li class="flex gap-2">
+                <span class="text-forest-500 mt-1">•</span>
+                <span>{i}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

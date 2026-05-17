@@ -1,0 +1,252 @@
+{
+  "sycamore": [
+    {
+      "file": "/photos/sycamore/01.jpeg",
+      "bytes": 454354
+    },
+    {
+      "file": "/photos/sycamore/02.jpeg",
+      "bytes": 114945
+    },
+    {
+      "file": "/photos/sycamore/03.png",
+      "bytes": 263015
+    },
+    {
+      "file": "/photos/sycamore/04.jpeg",
+      "bytes": 125693
+    },
+    {
+      "file": "/photos/sycamore/05.jpeg",
+      "bytes": 297552
+    },
+    {
+      "file": "/photos/sycamore/06.jpeg",
+      "bytes": 125186
+    },
+    {
+      "file": "/photos/sycamore/07.jpeg",
+      "bytes": 125186
+    },
+    {
+      "file": "/photos/sycamore/08.jpeg",
+      "bytes": 135233
+    },
+    {
+      "file": "/photos/sycamore/09.jpeg",
+      "bytes": 256001
+    },
+    {
+      "file": "/photos/sycamore/10.jpeg",
+      "bytes": 119705
+    },
+    {
+      "file": "/photos/sycamore/11.jpeg",
+      "bytes": 154288
+    },
+    {
+      "file": "/photos/sycamore/12.jpeg",
+      "bytes": 148871
+    }
+  ],
+  "buckeye": [
+    {
+      "file": "/photos/buckeye/01.jpeg",
+      "bytes": 62464
+    },
+    {
+      "file": "/photos/buckeye/02.jpeg",
+      "bytes": 71256
+    },
+    {
+      "file": "/photos/buckeye/03.jpeg",
+      "bytes": 70079
+    },
+    {
+      "file": "/photos/buckeye/04.jpeg",
+      "bytes": 205859
+    },
+    {
+      "file": "/photos/buckeye/05.jpeg",
+      "bytes": 118886
+    },
+    {
+      "file": "/photos/buckeye/06.jpeg",
+      "bytes": 276029
+    },
+    {
+      "file": "/photos/buckeye/07.jpeg",
+      "bytes": 195405
+    },
+    {
+      "file": "/photos/buckeye/08.jpeg",
+      "bytes": 297552
+    },
+    {
+      "file": "/photos/buckeye/09.jpeg",
+      "bytes": 152878
+    },
+    {
+      "file": "/photos/buckeye/10.jpeg",
+      "bytes": 154824
+    },
+    {
+      "file": "/photos/buckeye/11.jpeg",
+      "bytes": 220440
+    },
+    {
+      "file": "/photos/buckeye/12.jpeg",
+      "bytes": 379103
+    }
+  ],
+  "oak": [
+    {
+      "file": "/photos/oak/01.jpeg",
+      "bytes": 150811
+    },
+    {
+      "file": "/photos/oak/02.jpeg",
+      "bytes": 145225
+    },
+    {
+      "file": "/photos/oak/03.jpeg",
+      "bytes": 126961
+    },
+    {
+      "file": "/photos/oak/04.jpeg",
+      "bytes": 205007
+    },
+    {
+      "file": "/photos/oak/05.jpeg",
+      "bytes": 201189
+    },
+    {
+      "file": "/photos/oak/06.jpeg",
+      "bytes": 196515
+    },
+    {
+      "file": "/photos/oak/07.jpeg",
+      "bytes": 113365
+    },
+    {
+      "file": "/photos/oak/08.jpeg",
+      "bytes": 108038
+    },
+    {
+      "file": "/photos/oak/09.jpeg",
+      "bytes": 127597
+    },
+    {
+      "file": "/photos/oak/10.jpeg",
+      "bytes": 103847
+    },
+    {
+      "file": "/photos/oak/11.jpeg",
+      "bytes": 108863
+    },
+    {
+      "file": "/photos/oak/12.jpeg",
+      "bytes": 104867
+    }
+  ],
+  "willow": [
+    {
+      "file": "/photos/willow/01.jpeg",
+      "bytes": 179728
+    },
+    {
+      "file": "/photos/willow/02.jpeg",
+      "bytes": 150202
+    },
+    {
+      "file": "/photos/willow/03.jpeg",
+      "bytes": 164440
+    },
+    {
+      "file": "/photos/willow/04.jpeg",
+      "bytes": 147922
+    },
+    {
+      "file": "/photos/willow/05.jpeg",
+      "bytes": 112120
+    },
+    {
+      "file": "/photos/willow/06.jpeg",
+      "bytes": 157607
+    },
+    {
+      "file": "/photos/willow/07.jpg",
+      "bytes": 450936
+    },
+    {
+      "file": "/photos/willow/08.jpeg",
+      "bytes": 321947
+    },
+    {
+      "file": "/photos/willow/09.jpeg",
+      "bytes": 162436
+    },
+    {
+      "file": "/photos/willow/10.jpeg",
+      "bytes": 163937
+    },
+    {
+      "file": "/photos/willow/11.jpeg",
+      "bytes": 145115
+    },
+    {
+      "file": "/photos/willow/12.jpeg",
+      "bytes": 143317
+    }
+  ],
+  "maple": [
+    {
+      "file": "/photos/maple/01.jpeg",
+      "bytes": 658192
+    },
+    {
+      "file": "/photos/maple/02.jpeg",
+      "bytes": 296329
+    },
+    {
+      "file": "/photos/maple/03.jpeg",
+      "bytes": 408361
+    },
+    {
+      "file": "/photos/maple/04.jpeg",
+      "bytes": 518890
+    },
+    {
+      "file": "/photos/maple/05.jpeg",
+      "bytes": 231559
+    },
+    {
+      "file": "/photos/maple/06.jpeg",
+      "bytes": 148871
+    },
+    {
+      "file": "/photos/maple/07.jpeg",
+      "bytes": 190787
+    },
+    {
+      "file": "/photos/maple/08.jpeg",
+      "bytes": 205859
+    },
+    {
+      "file": "/photos/maple/09.jpeg",
+      "bytes": 276029
+    },
+    {
+      "file": "/photos/maple/10.jpeg",
+      "bytes": 152878
+    },
+    {
+      "file": "/photos/maple/11.jpeg",
+      "bytes": 161903
+    },
+    {
+      "file": "/photos/maple/12.jpeg",
+      "bytes": 154824
+    }
+  ]
+}

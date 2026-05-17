@@ -1,0 +1,35 @@
+---
+import { PROPERTY } from "../data/rooms";
+---
+
+<footer class="border-t border-forest-100 bg-forest-900 text-cream-100 mt-20">
+  <div class="max-w-6xl mx-auto px-5 py-10 grid md:grid-cols-3 gap-8 text-sm">
+    <div>
+      <div class="font-display text-lg text-cream-50">{PROPERTY.name}</div>
+      <p class="mt-2 text-cream-200/80">{PROPERTY.tagline}</p>
+    </div>
+    <div>
+      <div class="font-medium text-cream-50 mb-2">Location</div>
+      <p class="text-cream-200/80">
+        Southwest Dayton, Ohio<br />
+        Next to Jefferson High School
+      </p>
+      <p class="mt-2 text-cream-200/60 text-xs">Exact address shared after booking.</p>
+    </div>
+    <div>
+      <div class="font-medium text-cream-50 mb-2">Stay in touch</div>
+      <p class="text-cream-200/80">
+        <a href={`mailto:${PROPERTY.contactEmail}`} class="underline underline-offset-2 hover:text-cream-50">
+          {PROPERTY.contactEmail}
+        </a>
+      </p>
+      <p class="mt-2 text-cream-200/60">Returning guests: email for direct-book pricing.</p>
+    </div>
+  </div>
+  <div class="border-t border-forest-800">
+    <div class="max-w-6xl mx-auto px-5 py-4 text-xs text-cream-200/60 flex justify-between">
+      <span>© {new Date().getFullYear()} {PROPERTY.name}</span>
+      <span>Dayton, Ohio</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,48 @@
+---
+import Base from "../../layouts/Base.astro";
+import RoomCalendar from "../../components/RoomCalendar.astro";
+import AvailabilityGrid from "../../components/AvailabilityGrid.astro";
+import { ROOMS } from "../../data/rooms";
+import { getAvailability } from "../../lib/availability";
+
+const availability = await getAvailability();
+const byRoom = new Map(availability.map(a => [a.slug, a]));
+const fetchedAt = availability[0]?.fetchedAt ? new Date(availability[0].fetchedAt) : new Date();
+---
+
+<Base title="Availability" description="Live availability for all 5 rooms at Sycamore Getaway, synced directly from each room's Airbnb calendar.">
+  <section class="max-w-6xl mx-auto px-5 py-16">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Availability</p>
+    <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">Who's open, who's booked.</h1>
+    <p class="mt-4 max-w-2xl text-forest-800/90">
+      Synced live from each room's Airbnb calendar. Updates a few times per day.
+      Last refresh: {fetchedAt.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}.
+    </p>
+
+    <div class="mt-10">
+      <AvailabilityGrid />
+    </div>
+
+    {ROOMS.map((room) => {
+      const a = byRoom.get(room.slug);
+      const bookings = a?.bookings ?? [];
+      return (
+        <section class="mt-16 pt-10 border-t border-forest-100">
+          <div class="flex items-end justify-between mb-6 flex-wrap gap-3">
+            <div>
+              <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{room.tree}</p>
+              <h2 class="font-display text-3xl text-forest-900 mt-1">
+                <a href={`/rooms/${room.slug}/`} class="hover:text-forest-700">{room.name}</a>
+              </h2>
+              <p class="text-sm text-forest-700/80">{room.bed} · {room.bath} · ${room.nightly}/night</p>
+            </div>
+            <a href={room.airbnbUrl} target="_blank" rel="noopener" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-5 py-2 text-sm font-medium transition-colors">
+              Book on Airbnb
+            </a>
+          </div>
+          <RoomCalendar bookings={bookings} />
+        </section>
+      );
+    })}
+  </section>
+</Base>

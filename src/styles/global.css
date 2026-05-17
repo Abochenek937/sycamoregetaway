@@ -1,0 +1,60 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* Brand: forest green primary, warm wood accent, cream base */
+  --color-forest-50:  #f3f7f3;
+  --color-forest-100: #e3ede2;
+  --color-forest-200: #c6dac4;
+  --color-forest-300: #9bbf97;
+  --color-forest-400: #6a9d66;
+  --color-forest-500: #4a7f48;
+  --color-forest-600: #386336;
+  --color-forest-700: #2d4f2c;
+  --color-forest-800: #243f24;
+  --color-forest-900: #1d331d;
+
+  --color-wood-50:  #faf6f0;
+  --color-wood-100: #f3ead8;
+  --color-wood-200: #e5d3b0;
+  --color-wood-300: #d4b685;
+  --color-wood-400: #c1995e;
+  --color-wood-500: #a87d44;
+  --color-wood-600: #8a6536;
+  --color-wood-700: #6c4f2c;
+  --color-wood-800: #523c24;
+  --color-wood-900: #3d2d1c;
+
+  --color-cream-50:  #fdfcf8;
+  --color-cream-100: #faf6ec;
+  --color-cream-200: #f2ead4;
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  background: var(--color-cream-50);
+  color: var(--color-forest-900);
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-sans);
+}
+
+body {
+  background: var(--color-cream-50);
+}
+
+/* Scope link styling so utilities still win on buttons */
+.prose a {
+  color: var(--color-forest-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose a:hover {
+  color: var(--color-forest-900);
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}

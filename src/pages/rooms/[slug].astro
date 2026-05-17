@@ -1,0 +1,141 @@
+---
+import Base from "../../layouts/Base.astro";
+import RoomCalendar from "../../components/RoomCalendar.astro";
+import { ROOMS } from "../../data/rooms";
+import { getAvailability } from "../../lib/availability";
+
+export function getStaticPaths() {
+  return ROOMS.map((room) => ({ params: { slug: room.slug }, props: { room } }));
+}
+
+const { room } = Astro.props;
+const otherRooms = ROOMS.filter((r) => r.slug !== room.slug).slice(0, 3);
+const availability = await getAvailability();
+const roomAvail = availability.find((a) => a.slug === room.slug);
+const bookings = roomAvail?.bookings ?? [];
+---
+
+<Base title={room.name} description={room.blurb}>
+  <article class="max-w-5xl mx-auto px-5 py-16">
+    <a href="/rooms/" class="text-sm text-forest-700 hover:text-forest-900 inline-flex items-center gap-1">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      All rooms
+    </a>
+
+    <header class="mt-4">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{room.tree}</p>
+      <h1 class="font-display text-4xl md:text-5xl mt-1 text-forest-900">{room.name}</h1>
+      <p class="mt-2 text-forest-800/90">{room.bed} · {room.bath}</p>
+    </header>
+
+    {room.photos && room.photos.length > 0 ? (
+      <>
+        <div class="mt-8 aspect-[16/9] rounded-3xl overflow-hidden bg-forest-100">
+          <img
+            src={room.photos[0]}
+            alt={`${room.name} hero photo`}
+            class="w-full h-full object-cover"
+          />
+        </div>
+        {room.photos.length > 1 && (
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {room.photos.slice(1, 9).map((src, idx) => (
+              <a href={src} target="_blank" rel="noopener" class="aspect-square rounded-2xl overflow-hidden bg-forest-50 block hover:opacity-90 transition-opacity">
+                <img src={src} alt={`${room.name} photo ${idx + 2}`} loading="lazy" class="w-full h-full object-cover" />
+              </a>
+            ))}
+          </div>
+        )}
+      </>
+    ) : (
+      <div class="mt-8 aspect-[16/9] rounded-3xl bg-forest-100 relative overflow-hidden">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 120 120" class="w-32 h-32 opacity-30"><path d="M60 12c-8 16-22 22-22 40 0 11 7 19 15 22v34h14V74c8-3 15-11 15-22 0-18-14-24-22-40z" fill="var(--color-forest-500)"/></svg>
+        </div>
+      </div>
+    )}
+
+    <div class="grid md:grid-cols-3 gap-8 mt-10">
+      <div class="md:col-span-2 prose prose-lg max-w-none text-forest-900">
+        <p>{room.blurb}</p>
+        <h3 class="font-display text-2xl">Highlights</h3>
+        <ul>
+          {room.perks.map((p) => <li>{p}</li>)}
+        </ul>
+        <h3 class="font-display text-2xl">What's included</h3>
+        <ul>
+          <li>Access to the full shared kitchen</li>
+          <li>Common living areas and the central deck</li>
+          <li>Seasonal pool access</li>
+          <li>Fast Wi-Fi throughout the house</li>
+          <li>Free on-site parking</li>
+          <li>Self check-in via smart lock</li>
+        </ul>
+      </div>
+
+      <aside class="md:sticky md:top-24 h-fit">
+        <div class="rounded-2xl border border-forest-100 bg-white p-6 shadow-sm">
+          <div class="flex items-baseline gap-2">
+            <span class="font-display text-4xl text-forest-900">${room.nightly}</span>
+            <span class="text-sm text-forest-700/70">/ night</span>
+          </div>
+          <p class="text-xs text-forest-700/70 mt-1">22-night minimum · Airbnb fees apply</p>
+          <div class="mt-3 inline-flex items-center gap-1.5 text-xs font-medium bg-forest-100 text-forest-700 px-2.5 py-1 rounded-full">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+            No cleaning fee
+          </div>
+          <hr class="my-4 border-forest-100"/>
+          <p class="text-sm text-forest-700/80">Live availability</p>
+          <p class="font-display text-xl text-forest-900 mt-1">Book on Airbnb</p>
+          <p class="mt-3 text-sm text-forest-800/80">
+            Real-time calendar, AirCover protection, and instant messaging through the Airbnb app.
+          </p>
+          <a
+            href={room.airbnbUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-5 inline-flex w-full items-center justify-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-5 py-3 font-medium transition-colors"
+          >
+            View on Airbnb
+            <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </a>
+          <p class="mt-4 text-xs text-forest-700/70 text-center">
+            Stayed with us before?
+            <a href="/contact/" class="underline">Email for direct-book pricing</a>.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    {/* Live availability */}
+    <section class="mt-20">
+      <div class="flex items-end justify-between mb-6">
+        <div>
+          <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Live availability</p>
+          <h2 class="font-display text-2xl text-forest-900 mt-1">Next 3 months</h2>
+        </div>
+        <a href={room.airbnbUrl} target="_blank" rel="noopener" class="text-sm font-medium text-forest-700 hover:text-forest-900 underline underline-offset-2">
+          Check exact dates on Airbnb →
+        </a>
+      </div>
+      <RoomCalendar bookings={bookings} />
+      <p class="mt-3 text-xs text-forest-700/70 text-center">
+        Synced from Airbnb. Updates a few times per day. For real-time availability — especially within the next week — confirm on Airbnb.
+      </p>
+    </section>
+
+    {/* Other rooms */}
+    <section class="mt-20">
+      <h2 class="font-display text-2xl text-forest-900">Other rooms in the house</h2>
+      <div class="mt-6 grid sm:grid-cols-3 gap-6">
+        {otherRooms.map((r) => (
+          <a href={`/rooms/${r.slug}/`} class="block rounded-2xl border border-forest-100 bg-white p-5 hover:shadow-md transition-shadow">
+            <p class="uppercase text-xs tracking-wider text-forest-600">{r.tree}</p>
+            <p class="font-display text-lg text-forest-900 mt-1">{r.name}</p>
+            <p class="text-sm text-forest-800/80 mt-1">{r.bed}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </article>
+</Base>
