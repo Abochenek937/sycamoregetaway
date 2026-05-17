@@ -71,9 +71,9 @@ const fetchedAgo = (() => {
         <table class="w-full text-xs border-collapse">
           <thead>
             <tr class="bg-cream-50">
-              <th class="sticky left-0 bg-cream-50 z-10 text-left px-2 py-2 font-medium text-forest-900 min-w-[180px] border-r border-forest-100">Room</th>
-              {m.days.map((d) => (
-                <th class={`px-1 py-2 font-medium text-center ${d.isToday ? 'bg-wood-100 text-wood-800' : 'text-forest-700'}`} style="min-width:26px">
+              <th class="sticky left-0 bg-cream-50 z-10 text-left px-2 py-2 font-medium text-forest-900 min-w-[180px] border-r-2 border-forest-200">Room</th>
+              {m.days.map((d, di) => (
+                <th class={`px-1 py-2 font-medium text-center border-r border-forest-100 ${d.isToday ? 'bg-wood-100 text-wood-800' : 'text-forest-700'} ${(di + 1) % 7 === 0 ? 'border-r-2 border-forest-300' : ''}`} style="min-width:26px">
                   {d.day}
                 </th>
               ))}
@@ -84,8 +84,8 @@ const fetchedAgo = (() => {
               const a = byRoom.get(room.slug);
               const bookings = a?.bookings ?? [];
               return (
-                <tr class="border-t border-forest-50">
-                  <th class="sticky left-0 bg-white z-10 text-left px-2 py-2 font-medium text-forest-900 whitespace-nowrap border-r border-forest-100">
+                <tr class="border-t border-forest-100">
+                  <th class="sticky left-0 bg-white z-10 text-left px-2 py-2 font-medium text-forest-900 whitespace-nowrap border-r-2 border-forest-200">
                     <a href={`/rooms/${room.slug}/`} class="flex items-center gap-2 hover:text-forest-600">
                       <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-forest-700 text-cream-50 text-xs font-bold">{room.roomNumber}</span>
                       <span>
@@ -96,16 +96,17 @@ const fetchedAgo = (() => {
                       </span>
                     </a>
                   </th>
-                  {m.days.map((d) => {
+                  {m.days.map((d, di) => {
                     const blocked = isDateBlocked(d.ymd, bookings);
-                    const cls = d.isPast
-                      ? 'bg-forest-100 border border-forest-200'
+                    const base = d.isPast
+                      ? 'bg-forest-100'
                       : blocked
                         ? 'bg-wood-500'
                         : 'bg-forest-200 hover:bg-forest-300 transition-colors';
+                    const weekBorder = (di + 1) % 7 === 0 ? 'border-r-2 border-forest-300' : 'border-r border-forest-100';
                     return (
                       <td
-                        class={`h-8 ${cls}`}
+                        class={`h-8 ${base} ${weekBorder}`}
                         title={`Room ${room.roomNumber} (${room.tree}) · ${d.ymd} · ${d.isPast ? 'Past' : blocked ? 'Booked' : 'Available'}`}
                         style="min-width:26px"
                       ></td>

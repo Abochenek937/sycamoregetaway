@@ -1,7 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
 import RoomCard from "../components/RoomCard.astro";
-import AvailabilityGrid from "../components/AvailabilityGrid.astro";
 import { ROOMS, PROPERTY } from "../data/rooms";
 import { getAvailability } from "../lib/availability";
 import { isDateBlocked, todayYmd } from "../lib/ical";
@@ -73,6 +72,7 @@ const audiences = [
   { title: "Travel nurses", body: "13-week contracts at Kettering, Miami Valley, Premier Health, or Dayton Children's. Quiet sleep between night shifts, full kitchen, flexible cancellation if your contract ends early." },
   { title: "Construction crews", body: "Project teams working sites in the Dayton metro. King beds, free parking for the trucks, and space to actually rest after a long day." },
   { title: "Students & interns", body: "Wright State, Sinclair, UD, and summer interns at Wright-Patt. Cheaper than a sublease, no lease, fast Wi-Fi." },
+  { title: "Military & contractors", body: "PCS-ing through Wright-Patt AFB, on temporary duty, or visiting family stationed there. Quiet, 25 minutes from base, no lease." },
   { title: "Relocating to Dayton", body: "Between houses or waiting on closing? Cheaper than a hotel, no 12-month lease, leave the month your house is ready." },
 ];
 
@@ -117,17 +117,18 @@ const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
   </section>
 
   {/* ──────────── 2. AVAILABILITY GLANCE ──────────── */}
-  <section class="max-w-6xl mx-auto px-5 py-16">
-    <div class="text-center mb-8">
-      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Live from Airbnb</p>
-      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">
-        {openNow > 0 ? `${openNow} of ${PROPERTY.bedrooms} rooms open today.` : 'Rooms book up — see what\'s coming open.'}
-      </h2>
-      <p class="mt-3 max-w-2xl mx-auto text-forest-800/85">
-        Synced from each room's Airbnb calendar. Green = available, brown = booked.
-      </p>
-    </div>
-    <AvailabilityGrid />
+  <section class="max-w-4xl mx-auto px-5 py-16 text-center">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Live from Airbnb</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">
+      {openNow > 0 ? `${openNow} of ${PROPERTY.bedrooms} rooms open today.` : 'Rooms book up — see what\'s coming open.'}
+    </h2>
+    <p class="mt-3 max-w-2xl mx-auto text-forest-800/85">
+      See the full calendar to pick your dates.
+    </p>
+    <a href="/availability/" class="mt-6 inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">
+      View availability calendar
+      <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
   </section>
 
   {/* ──────────── 3. THE PROPERTY (quick orient) ──────────── */}
@@ -223,8 +224,8 @@ const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
         <p class="uppercase tracking-wider text-forest-700 text-xs font-medium mt-4">$0 cleaning fee</p>
         <h3 class="font-display text-xl mt-1 text-forest-900">The price you see is the price.</h3>
         <p class="mt-3 text-forest-800/90 leading-relaxed text-sm">
-          Most Airbnbs slap $100–200 on at checkout. Hotels add resort fees. Apartments charge
-          move-out cleaning. We charge zero.
+          No cleaning fee, ever. A professional cleaner does a deep clean every two months,
+          and regular maintenance keeps shared spaces tidy in between.
         </p>
       </div>
       <div class="rounded-3xl bg-gradient-to-br from-cream-100 to-forest-50 border border-forest-200 p-6">
@@ -394,14 +395,16 @@ const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
     <div class="mt-16">
       <p class="uppercase tracking-wider text-forest-600 text-xs font-medium text-center">What lives here</p>
       <h3 class="font-display text-2xl md:text-3xl mt-2 text-forest-900 text-center">Spotted on the property.</h3>
-      <ul class="mt-8 grid grid-cols-3 md:grid-cols-6 gap-3 text-center">
+      <ul class="mt-8 grid grid-cols-4 md:grid-cols-8 gap-3 text-center">
         {[
           { name: "Deer", emoji: "🦌" },
           { name: "Turkeys", emoji: "🦃" },
           { name: "Owls", emoji: "🦉" },
           { name: "Songbirds", emoji: "🐦" },
-          { name: "Frogs", emoji: "🐸" },
           { name: "Bald eagle", emoji: "🦅" },
+          { name: "Frogs", emoji: "🐸" },
+          { name: "Turtles", emoji: "🐢" },
+          { name: "Salamanders", emoji: "🦎" },
         ].map((w) => (
           <li class="rounded-2xl bg-white border border-forest-100 p-3">
             <div class="text-2xl">{w.emoji}</div>
