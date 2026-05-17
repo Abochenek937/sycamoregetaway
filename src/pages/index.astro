@@ -78,10 +78,10 @@ const audiences = [
 
 // Quick property photo strip on the homepage. Hand-picked good outdoor/common-area shots.
 const photoStrip = [
-  '/photos/buckeye/12.jpeg',  // front of house
-  '/photos/maple/05.jpeg',    // back porch / pool
-  '/photos/buckeye/11.jpeg',  // sandy corner
-  '/photos/sycamore/05.jpeg', // kitchen/living
+  '/photos/front-of-house/01.jpeg',  // front of house
+  '/photos/back-porch-pool/04.jpeg', // back porch / pool
+  '/photos/sandy/01.jpeg',           // sandy corner
+  '/photos/kitchen-living/01.jpeg',  // kitchen/living
 ];
 ---
 
@@ -89,7 +89,7 @@ const photoStrip = [
   {/* ──────────── 1. HERO ──────────── */}
   <section class="relative bg-forest-900 text-cream-50 overflow-hidden">
     <img
-      src="/photos/oak/01.jpeg"
+      src="/photos/kitchen-living/01.jpeg"
       alt="Sycamore Getaway main kitchen and living area"
       class="absolute inset-0 w-full h-full object-cover opacity-55"
     />
@@ -351,7 +351,7 @@ const photoStrip = [
     {/* Sandy corner */}
     <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
       <div class="aspect-[4/3] rounded-3xl overflow-hidden">
-        <img src="/photos/buckeye/11.jpeg" alt="Sandy clearing with fire pit at sunset" class="w-full h-full object-cover" loading="lazy" />
+        <img src="/photos/sandy/01.jpeg" alt="Sandy clearing with fire pit at sunset" class="w-full h-full object-cover" loading="lazy" />
       </div>
       <div>
         <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The sandy corner</p>
@@ -367,7 +367,7 @@ const photoStrip = [
     {/* Kitchen */}
     <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
       <div class="md:order-2 aspect-[4/3] rounded-3xl overflow-hidden">
-        <img src="/photos/oak/01.jpeg" alt="Shared kitchen" class="w-full h-full object-cover" loading="lazy" />
+        <img src="/photos/kitchen-living/01.jpeg" alt="Shared kitchen" class="w-full h-full object-cover" loading="lazy" />
       </div>
       <div class="md:order-1">
         <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The shared kitchen</p>

@@ -1,149 +1,57 @@
 ---
-// Internal guided photo picker. Walks Alex through each "slot" on the site
-// and shows candidate photos so he can tell Claw which file to use.
-// DELETE this file once all slots are filled.
+// Internal tool — browse all photos organized by category.
+// DELETE this file when no longer needed.
 
 import Base from "../layouts/Base.astro";
 import fs from "node:fs";
 import path from "node:path";
 
 const photosDir = path.join(process.cwd(), "public", "photos");
-const rooms = ["sycamore", "buckeye", "oak", "maple", "willow"] as const;
+const categories = fs
+  .readdirSync(photosDir, { withFileTypes: true })
+  .filter((d) => d.isDirectory())
+  .map((d) => d.name)
+  .sort();
 
-function listFiles(slug: string): string[] {
-  const dir = path.join(photosDir, slug);
-  return fs.existsSync(dir)
-    ? fs.readdirSync(dir).filter((f) => /\.(jpe?g|png)$/i.test(f)).sort()
-    : [];
-}
-
-const allByRoom: Record<string, string[]> = {};
-for (const r of rooms) {
-  allByRoom[r] = listFiles(r).map((f) => `/photos/${r}/${f}`);
-}
-
-// Define each "slot" — a place on the site that needs a photo.
-type Slot = {
-  id: string;
-  title: string;
-  context: string;       // where on the site this lives
-  current?: string;      // currently-used filename
-  candidates: string[];  // suggested folders to look in
-};
-
-const slots: Slot[] = [
-  {
-    id: "hero",
-    title: "Homepage hero background",
-    context: "The big photo behind 'A quiet, modern house in the woods.' — wants something wide, atmospheric, ideally the kitchen with blue cove lights OR an exterior dusk shot.",
-    current: "/photos/willow/01.jpeg (kitchen)",
-    candidates: [...allByRoom.willow, ...allByRoom.sycamore.slice(0, 4), ...allByRoom.buckeye.slice(0, 4)],
-  },
-  {
-    id: "sandy",
-    title: "The Sandy Corner section",
-    context: "On the homepage feature block titled 'A natural sand clearing. A fire pit. Sunset.' — needs the sandy beach with fire pit.",
-    current: "/photos/buckeye/11.jpeg",
-    candidates: allByRoom.buckeye,
-  },
-  {
-    id: "kitchen",
-    title: "The Shared Kitchen section",
-    context: "Homepage feature block 'A real kitchen. Not a microwave and a mini-fridge.' — wants a kitchen shot, ideally with the blue cove lights to differentiate from generic kitchens.",
-    current: "/photos/willow/01.jpeg",
-    candidates: allByRoom.willow,
-  },
-  {
-    id: "sycamore-hero",
-    title: "Sycamore (Master Suite) — room page hero",
-    context: "Top of /rooms/sycamore/ — wants the king bed in the master with private bath visible if possible.",
-    current: "Auto: /photos/sycamore/01.jpeg (first photo in folder)",
-    candidates: allByRoom.sycamore,
-  },
-  {
-    id: "buckeye-hero",
-    title: "Buckeye Room — page hero",
-    context: "Top of /rooms/buckeye/ — wants the king bed.",
-    current: "Auto: /photos/buckeye/01.jpeg",
-    candidates: allByRoom.buckeye,
-  },
-  {
-    id: "oak-hero",
-    title: "Oak Room — page hero",
-    context: "Top of /rooms/oak/ — wants the king bed.",
-    current: "Auto: /photos/oak/01.jpeg",
-    candidates: allByRoom.oak,
-  },
-  {
-    id: "maple-hero",
-    title: "Maple Room — page hero",
-    context: "Top of /rooms/maple/ — wants the king bed.",
-    current: "Auto: /photos/maple/01.jpeg",
-    candidates: allByRoom.maple,
-  },
-  {
-    id: "willow-hero",
-    title: "Willow Room — page hero (the QUEEN bed)",
-    context: "Top of /rooms/willow/ — wants the queen bed.",
-    current: "Auto: /photos/willow/01.jpeg (but this is the kitchen — need to pick the actual queen bed)",
-    candidates: allByRoom.willow,
-  },
-  {
-    id: "thumbnail-willow-card",
-    title: "Willow room card on homepage rooms grid",
-    context: "Small card showing on / and /rooms/ — uses the first photo from Willow folder. Same problem as above.",
-    current: "Auto: /photos/willow/01.jpeg (kitchen)",
-    candidates: allByRoom.willow,
-  },
-];
-
-const allFiles = Object.entries(allByRoom).flatMap(([slug, list]) => list);
+const all = categories.map((cat) => {
+  const dir = path.join(photosDir, cat);
+  const files = fs.readdirSync(dir).filter((f) => /\.(jpe?g|png)$/i.test(f)).sort();
+  return { cat, files: files.map((f) => `/photos/${cat}/${f}`) };
+});
 ---
 
-<Base title="Photo Picker (private)" description="Internal photo selection tool.">
+<Base title="Photo Picker (private)" description="Internal tool.">
   <section class="max-w-6xl mx-auto px-5 py-10">
     <p class="uppercase tracking-wider text-wood-700 text-xs font-medium">Private tool — delete when done</p>
-    <h1 class="font-display text-3xl text-forest-900 mt-2">Photo picker — slot by slot</h1>
+    <h1 class="font-display text-3xl text-forest-900 mt-2">Photos by category</h1>
     <p class="mt-3 text-forest-800/85 max-w-2xl">
-      Each section below is a spot on the site that needs a photo. Browse the candidates,
-      click any to open it full-size, and tell me the filename you want me to use.
-      Format your answer like:
+      Photos reorganized into category folders. Each photo has its path below it. Tell Claw the
+      filename to use for any spot on the site.
     </p>
-    <pre class="mt-3 bg-forest-50 border border-forest-100 rounded-xl p-3 text-sm font-mono text-forest-900">  hero = willow/01.jpeg
-  sandy = buckeye/11.jpeg
-  willow-hero = willow/05.jpeg</pre>
 
-    {/* Index */}
-    <nav class="mt-8 rounded-2xl border border-forest-100 bg-cream-50 p-4">
-      <p class="text-xs uppercase tracking-wider text-forest-600 font-medium mb-2">Jump to slot</p>
-      <ul class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
-        {slots.map((s, i) => (
-          <li><a href={`#slot-${s.id}`} class="text-forest-700 hover:text-forest-900 underline">{i + 1}. {s.title}</a></li>
+    <nav class="mt-6 rounded-2xl border border-forest-100 bg-cream-50 p-4">
+      <p class="text-xs uppercase tracking-wider text-forest-600 font-medium mb-2">Jump to:</p>
+      <ul class="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+        {all.map(({ cat, files }) => (
+          <li><a href={`#${cat}`} class="text-forest-700 hover:text-forest-900 underline">{cat} ({files.length})</a></li>
         ))}
       </ul>
     </nav>
 
-    {slots.map((s, i) => (
-      <section id={`slot-${s.id}`} class="mt-12 pt-8 border-t border-forest-100">
-        <div class="flex items-baseline gap-3 flex-wrap">
-          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-forest-700 text-cream-50 text-xs font-bold">{i + 1}</span>
-          <h2 class="font-display text-2xl text-forest-900">{s.title}</h2>
-        </div>
-        <p class="mt-2 text-sm text-forest-800/85">{s.context}</p>
-        {s.current && <p class="mt-1 text-xs text-forest-700/70"><strong>Currently using:</strong> {s.current}</p>}
-        <p class="mt-3 text-xs text-wood-700 font-mono">Slot id: <strong>{s.id}</strong></p>
-
-        <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          {s.candidates.map((src) => {
-            const parts = src.split("/");
-            const fname = parts.slice(-2).join("/"); // "willow/01.jpeg"
+    {all.map(({ cat, files }) => (
+      <section id={cat} class="mt-10">
+        <h2 class="font-display text-2xl text-forest-900 capitalize">{cat.replace(/-/g, ' ')}</h2>
+        <p class="text-sm text-forest-700/70">{files.length} photos · path prefix: <code>/photos/{cat}/</code></p>
+        <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {files.map((src) => {
+            const fname = src.split("/").pop();
             return (
-              <div class="rounded-xl overflow-hidden border border-forest-100 bg-white">
+              <div class="rounded-2xl overflow-hidden border border-forest-100 bg-white">
                 <a href={src} target="_blank" rel="noopener" class="block">
                   <img src={src} alt={fname} loading="lazy" class="w-full aspect-square object-cover" />
                 </a>
-                <p class="px-2 py-1.5 text-xs font-mono text-forest-800 bg-cream-50 border-t border-forest-100 truncate">
-                  {fname}
+                <p class="px-3 py-2 text-xs font-mono text-forest-800 bg-cream-50 border-t border-forest-100">
+                  {cat} / {fname}
                 </p>
               </div>
             );
@@ -151,28 +59,5 @@ const allFiles = Object.entries(allByRoom).flatMap(([slug, list]) => list);
         </div>
       </section>
     ))}
-
-    <section class="mt-12 pt-8 border-t border-forest-100">
-      <h2 class="font-display text-2xl text-forest-900">All {allFiles.length} photos in one grid</h2>
-      <p class="mt-2 text-sm text-forest-800/85">Fallback if none of the slot candidates above fit — every photo, organized by room.</p>
-      {rooms.map((r) => (
-        <div class="mt-6">
-          <h3 class="font-display text-lg text-forest-900 capitalize">{r} <span class="text-sm text-forest-700/70">({allByRoom[r].length})</span></h3>
-          <div class="mt-2 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
-            {allByRoom[r].map((src) => {
-              const fname = src.split("/").slice(-2).join("/");
-              return (
-                <div class="rounded-lg overflow-hidden border border-forest-100 bg-white">
-                  <a href={src} target="_blank" rel="noopener" class="block">
-                    <img src={src} alt={fname} loading="lazy" class="w-full aspect-square object-cover" />
-                  </a>
-                  <p class="px-1.5 py-1 text-[10px] font-mono text-forest-800 bg-cream-50 border-t border-forest-100 truncate">{fname}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-    </section>
   </section>
 </Base>

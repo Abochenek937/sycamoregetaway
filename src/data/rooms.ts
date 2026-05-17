@@ -15,15 +15,38 @@ export type Room = {
 };
 
 // Photo file lists pulled from Airbnb listings. Filenames track what fetch-airbnb-photos.mjs produced.
-// Photos per room. First entry is the HERO (shown on the room card + top of the room page).
-// Order chosen by Alex from /photo-picker.
-const PHOTOS: Record<string, string[]> = {
-  sycamore: ['/photos/sycamore/04.jpeg','/photos/sycamore/01.jpeg','/photos/sycamore/02.jpeg','/photos/sycamore/05.jpeg','/photos/sycamore/06.jpeg','/photos/sycamore/07.jpeg','/photos/sycamore/08.jpeg','/photos/sycamore/09.jpeg','/photos/sycamore/10.jpeg','/photos/sycamore/11.jpeg','/photos/sycamore/12.jpeg'],
-  buckeye:  ['/photos/buckeye/01.jpeg','/photos/buckeye/02.jpeg','/photos/buckeye/03.jpeg','/photos/buckeye/04.jpeg','/photos/buckeye/05.jpeg','/photos/buckeye/06.jpeg','/photos/buckeye/07.jpeg','/photos/buckeye/08.jpeg','/photos/buckeye/09.jpeg','/photos/buckeye/10.jpeg','/photos/buckeye/11.jpeg','/photos/buckeye/12.jpeg'],
-  oak:      ['/photos/oak/02.jpeg','/photos/oak/01.jpeg','/photos/oak/03.jpeg','/photos/oak/04.jpeg','/photos/oak/05.jpeg','/photos/oak/06.jpeg','/photos/oak/08.jpeg','/photos/oak/09.jpeg','/photos/oak/10.jpeg','/photos/oak/11.jpeg','/photos/oak/12.jpeg'],
-  maple:    ['/photos/maple/03.jpeg','/photos/maple/01.jpeg','/photos/maple/02.jpeg','/photos/maple/04.jpeg','/photos/maple/05.jpeg','/photos/maple/06.jpeg','/photos/maple/07.jpeg','/photos/maple/08.jpeg','/photos/maple/09.jpeg','/photos/maple/10.jpeg','/photos/maple/11.jpeg','/photos/maple/12.jpeg'],
-  willow:   ['/photos/willow/01.jpeg','/photos/willow/02.jpg','/photos/willow/03.jpeg','/photos/willow/04.jpg','/photos/willow/05.jpeg','/photos/willow/06.jpeg','/photos/willow/07.jpeg','/photos/willow/08.jpeg','/photos/willow/09.jpg','/photos/willow/10.jpeg','/photos/willow/11.jpeg','/photos/willow/12.jpeg'],
+// Photos are organized by category (not by room) after the 2026-05-17 reorganization.
+// Each room's `photos` array combines its bedroom shots + relevant property shots.
+// First photo in each room's array is the HERO (room card + top of room page).
+
+const PROPERTY_PHOTOS = {
+  master:        ['/photos/master/01.jpeg','/photos/master/02.png','/photos/master/03.jpeg','/photos/master/04.jpeg','/photos/master/05.jpeg','/photos/master/06.jpeg','/photos/master/07.jpeg','/photos/master/08.jpeg','/photos/master/09.jpeg','/photos/master/10.jpeg'],
+  kitchenLiving: ['/photos/kitchen-living/01.jpeg','/photos/kitchen-living/02.jpeg','/photos/kitchen-living/03.jpeg','/photos/kitchen-living/04.jpeg','/photos/kitchen-living/05.jpeg','/photos/kitchen-living/06.jpeg','/photos/kitchen-living/07.jpeg','/photos/kitchen-living/08.jpeg','/photos/kitchen-living/09.jpeg','/photos/kitchen-living/10.jpeg','/photos/kitchen-living/11.jpeg','/photos/kitchen-living/12.jpeg'],
+  pool:          ['/photos/back-porch-pool/01.jpeg','/photos/back-porch-pool/02.jpeg','/photos/back-porch-pool/03.jpeg','/photos/back-porch-pool/04.jpeg','/photos/back-porch-pool/05.jpeg','/photos/back-porch-pool/06.jpeg'],
+  courtyard:     ['/photos/courtyard/01.jpeg','/photos/courtyard/02.jpeg','/photos/courtyard/03.jpeg'],
+  sandy:         ['/photos/sandy/01.jpeg'],
+  front:         ['/photos/front-of-house/01.jpeg','/photos/front-of-house/02.jpg','/photos/front-of-house/03.jpg','/photos/front-of-house/04.jpeg'],
+  bathroom:      ['/photos/bathroom/01.jpeg','/photos/bathroom/02.jpeg'],
 };
+
+const BEDROOMS = {
+  buckeye: ['/photos/buckeye-bedroom/01.jpeg','/photos/buckeye-bedroom/02.jpeg','/photos/buckeye-bedroom/03.jpeg'],
+  oak:     ['/photos/oak-bedroom/01.jpeg','/photos/oak-bedroom/02.jpeg','/photos/oak-bedroom/03.jpeg'],
+  maple:   ['/photos/maple-bedroom/01.jpeg','/photos/maple-bedroom/02.jpeg','/photos/maple-bedroom/03.jpeg','/photos/maple-bedroom/04.jpeg'],
+  // Willow: no bedroom photos uploaded yet — use a placeholder + property shots only.
+};
+
+// Compose each room's photo list: bedroom first (hero), then property scenes the guest can enjoy.
+const PHOTOS: Record<string, string[]> = {
+  sycamore: [...PROPERTY_PHOTOS.master, ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.bathroom],
+  buckeye:  [...BEDROOMS.buckeye, ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
+  oak:      [...BEDROOMS.oak,     ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
+  maple:    [...BEDROOMS.maple,   ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
+  // Willow has no dedicated bedroom photos yet. Use placeholder + property shots so the page isn't empty.
+  willow:   [...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.courtyard, ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
+};
+
+export { PROPERTY_PHOTOS };
 
 export const ROOMS: Room[] = [
   {

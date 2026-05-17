@@ -9,7 +9,14 @@ const { room } = Astro.props;
   class="group block rounded-3xl border border-forest-100 bg-white hover:shadow-lg transition-shadow overflow-hidden"
 >
   <div class="aspect-[4/3] bg-forest-100 relative overflow-hidden">
-    {room.photos && room.photos[0] ? (
+    {room.slug === 'willow' ? (
+      <div class="absolute inset-0 bg-gradient-to-br from-forest-100 via-cream-100 to-forest-50 flex flex-col items-center justify-center">
+        <svg viewBox="0 0 120 120" class="w-16 h-16 opacity-40" aria-hidden="true">
+          <path d="M60 12c-8 16-22 22-22 40 0 11 7 19 15 22v34h14V74c8-3 15-11 15-22 0-18-14-24-22-40z" fill="var(--color-forest-500)"/>
+        </svg>
+        <p class="font-display text-sm text-forest-700 mt-2">Photos coming soon</p>
+      </div>
+    ) : room.photos && room.photos[0] ? (
       <img
         src={room.photos[0]}
         alt={`${room.name} at Sycamore Getaway`}

@@ -28,7 +28,21 @@ const bookings = roomAvail?.bookings ?? [];
       <p class="mt-2 text-forest-800/90">{room.bed} · {room.bath}</p>
     </header>
 
-    {room.photos && room.photos.length > 0 ? (
+    {/* Hero photo — use bedroom shot if available, otherwise a tasteful placeholder. */}
+    {room.slug === 'willow' ? (
+      <div class="mt-8 aspect-[16/9] rounded-3xl overflow-hidden bg-gradient-to-br from-forest-100 via-cream-100 to-forest-50 relative">
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+          <svg viewBox="0 0 120 120" class="w-20 h-20 opacity-40" aria-hidden="true">
+            <path d="M60 12c-8 16-22 22-22 40 0 11 7 19 15 22v34h14V74c8-3 15-11 15-22 0-18-14-24-22-40z" fill="var(--color-forest-500)"/>
+          </svg>
+          <p class="font-display text-2xl text-forest-800 mt-4">Photos coming soon</p>
+          <p class="text-sm text-forest-700/80 mt-1 max-w-sm">
+            The {room.name} is freshly turned over. New photos will be added shortly.
+            See real-time photos on the Airbnb listing.
+          </p>
+        </div>
+      </div>
+    ) : room.photos && room.photos.length > 0 ? (
       <>
         <div class="mt-8 aspect-[16/9] rounded-3xl overflow-hidden bg-forest-100">
           <img
