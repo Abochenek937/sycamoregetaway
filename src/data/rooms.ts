@@ -22,11 +22,11 @@ export type Room = {
 const PROPERTY_PHOTOS = {
   master:        ['/photos/master/01.jpeg','/photos/master/02.png','/photos/master/03.jpeg','/photos/master/04.jpeg','/photos/master/05.jpeg','/photos/master/06.jpeg','/photos/master/07.jpeg','/photos/master/08.jpeg','/photos/master/09.jpeg'],
   kitchenLiving: ['/photos/kitchen-living/01.jpeg','/photos/kitchen-living/02.jpeg','/photos/kitchen-living/04.jpeg','/photos/kitchen-living/05.jpeg','/photos/kitchen-living/06.jpeg','/photos/kitchen-living/07.jpeg','/photos/kitchen-living/08.jpeg','/photos/kitchen-living/09.jpeg','/photos/kitchen-living/10.jpeg','/photos/kitchen-living/11.jpeg','/photos/kitchen-living/12.jpeg','/photos/kitchen-living/13.jpeg','/photos/kitchen-living/14.jpeg'],
-  pool:          ['/photos/back-porch-pool/01.jpeg','/photos/back-porch-pool/02.jpeg','/photos/back-porch-pool/03.jpeg','/photos/back-porch-pool/04.jpeg','/photos/back-porch-pool/05.jpeg','/photos/back-porch-pool/06.jpeg','/photos/back-porch-pool/07.jpeg'],
+  pool:          ['/photos/back-porch-pool/01.jpeg','/photos/back-porch-pool/02.jpeg','/photos/back-porch-pool/03.jpeg','/photos/back-porch-pool/04.jpeg'],
   courtyard:     ['/photos/courtyard/01.jpeg'],
   sandy:         ['/photos/sandy/01.jpeg'],
   front:         ['/photos/front-of-house/01.jpeg','/photos/front-of-house/02.jpg'],
-  bathroom:      ['/photos/bathroom/01.jpeg','/photos/bathroom/02.jpeg','/photos/bathroom/03.jpeg'],
+  bathroom:      ['/photos/bathroom/01.jpeg','/photos/bathroom/02.jpeg'],
 };
 
 const BEDROOMS = {
