@@ -1,0 +1,54 @@
+---
+// Internal tool — hidden from nav. Shows every photo with its filename so Alex can
+// tell Claw which one is the kitchen with blue cove lights, which is the willow queen, etc.
+// DELETE this file after photos are confirmed.
+
+import Base from "../layouts/Base.astro";
+import fs from "node:fs";
+import path from "node:path";
+
+const photosDir = path.join(process.cwd(), "public", "photos");
+const rooms = ["sycamore", "buckeye", "oak", "maple", "willow"];
+
+const all = rooms.map((slug) => {
+  const dir = path.join(photosDir, slug);
+  const files = fs.existsSync(dir)
+    ? fs.readdirSync(dir).filter((f) => /\.(jpe?g|png)$/i.test(f)).sort()
+    : [];
+  return { slug, files: files.map((f) => `/photos/${slug}/${f}`) };
+});
+---
+
+<Base title="Photo Picker (private)" description="Internal tool for choosing room photos.">
+  <section class="max-w-6xl mx-auto px-5 py-10">
+    <p class="uppercase tracking-wider text-wood-700 text-xs font-medium">Private tool</p>
+    <h1 class="font-display text-3xl text-forest-900 mt-2">All photos by room</h1>
+    <p class="mt-3 text-forest-800/85 max-w-2xl">
+      Browse every photo I downloaded from your Airbnb listings. Each photo has its filename
+      below it (e.g. <code>sycamore / 03.jpeg</code>). Just tell me which numbers I should use
+      for things like "the kitchen hero" or "the Willow queen bed."
+    </p>
+
+    {all.map(({ slug, files }) => (
+      <section class="mt-10">
+        <h2 class="font-display text-2xl text-forest-900 capitalize">{slug}</h2>
+        <p class="text-sm text-forest-700/70">{files.length} photos</p>
+        <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {files.map((src) => {
+            const fname = src.split("/").pop();
+            return (
+              <div class="rounded-2xl overflow-hidden border border-forest-100 bg-white">
+                <a href={src} target="_blank" rel="noopener" class="block">
+                  <img src={src} alt={fname} loading="lazy" class="w-full aspect-square object-cover" />
+                </a>
+                <p class="px-3 py-2 text-xs font-mono text-forest-800 bg-cream-50 border-t border-forest-100">
+                  {slug} / {fname}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+  </section>
+</Base>

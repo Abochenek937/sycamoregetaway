@@ -2,6 +2,8 @@ export type Room = {
   slug: string;
   name: string;          // e.g. "The Sycamore Suite"
   tree: string;          // e.g. "Sycamore"
+  roomNumber: number;    // physical door number in the house
+  bathType: 'private' | 'shared'; // for the calendar legend
   bed: string;           // e.g. "King bed"
   bath: string;          // e.g. "Private bath + walk-in closet"
   perks: string[];       // bullet highlights
@@ -34,6 +36,8 @@ export const ROOMS: Room[] = [
     airbnbUrl: "https://www.airbnb.com/rooms/1111428921897172515",
     nightly: 44,
     photos: PHOTOS.sycamore,
+    roomNumber: 4,
+    bathType: 'private',
     featured: true,
   },
   {
@@ -48,6 +52,8 @@ export const ROOMS: Room[] = [
     airbnbUrl: "https://www.airbnb.com/rooms/1111425818356469330",
     nightly: 35,
     photos: PHOTOS.buckeye,
+    roomNumber: 2,
+    bathType: 'shared',
   },
   {
     slug: "oak",
@@ -61,6 +67,8 @@ export const ROOMS: Room[] = [
     airbnbUrl: "https://www.airbnb.com/rooms/759999645287941690",
     nightly: 35,
     photos: PHOTOS.oak,
+    roomNumber: 3,
+    bathType: 'shared',
   },
   {
     slug: "maple",
@@ -75,6 +83,8 @@ export const ROOMS: Room[] = [
     airbnbUrl: "https://www.airbnb.com/rooms/1181878712778722851",
     nightly: 35,
     photos: PHOTOS.maple,
+    roomNumber: 5,
+    bathType: 'shared',
   },
   {
     slug: "willow",
@@ -88,6 +98,8 @@ export const ROOMS: Room[] = [
     airbnbUrl: "https://www.airbnb.com/rooms/560037966152727439",
     nightly: 35,
     photos: PHOTOS.willow,
+    roomNumber: 1,
+    bathType: 'shared',
   },
 ];
 

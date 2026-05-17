@@ -1,6 +1,6 @@
 ---
-// Per-month availability grid, much clearer than a 90-day strip.
-// One row per room. Each cell is a labeled date. Months stack vertically.
+// Two-month availability grid sorted by physical room number 1–5.
+// Each row shows: Room # · Tree name · Bath type · then date cells.
 
 import { isDateBlocked } from '../lib/ical';
 import { getAvailability } from '../lib/availability';
@@ -9,9 +9,11 @@ import { ROOMS } from '../data/rooms';
 const avail = await getAvailability();
 const byRoom = new Map(avail.map(a => [a.slug, a]));
 
+// Sort by physical room number so it matches what's above the doors in the house.
+const orderedRooms = [...ROOMS].sort((a, b) => a.roomNumber - b.roomNumber);
+
 function pad(n: number) { return String(n).padStart(2, '0'); }
 
-// Build 3 months of data starting from today's month
 const now = new Date();
 now.setUTCHours(0,0,0,0);
 const todayYmd = `${now.getUTCFullYear()}-${pad(now.getUTCMonth()+1)}-${pad(now.getUTCDate())}`;
@@ -20,7 +22,7 @@ type Cell = { ymd: string; day: number; isToday: boolean; isPast: boolean };
 type Month = { label: string; year: number; days: Cell[] };
 
 const months: Month[] = [];
-for (let i = 0; i < 3; i++) {
+for (let i = 0; i < 2; i++) {
   const first = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + i, 1));
   const last = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + i + 1, 0));
   const days: Cell[] = [];
@@ -50,11 +52,8 @@ const fetchedAgo = (() => {
 ---
 
 <div class="space-y-6">
-  {/* Header */}
   <div class="flex items-center justify-between flex-wrap gap-3">
-    <p class="text-sm text-forest-700/80">
-      Live from Airbnb · last sync {fetchedAgo}
-    </p>
+    <p class="text-sm text-forest-700/80">Live from Airbnb · last sync {fetchedAgo}</p>
     <div class="flex items-center gap-4 text-xs">
       <span class="flex items-center gap-1.5"><span class="w-4 h-4 rounded bg-forest-200"></span>Available</span>
       <span class="flex items-center gap-1.5"><span class="w-4 h-4 rounded bg-wood-500"></span>Booked</span>
@@ -72,7 +71,7 @@ const fetchedAgo = (() => {
         <table class="w-full text-xs border-collapse">
           <thead>
             <tr class="bg-cream-50">
-              <th class="sticky left-0 bg-cream-50 z-10 text-left px-3 py-2 font-medium text-forest-900 min-w-[110px] border-r border-forest-100">Room</th>
+              <th class="sticky left-0 bg-cream-50 z-10 text-left px-2 py-2 font-medium text-forest-900 min-w-[180px] border-r border-forest-100">Room</th>
               {m.days.map((d) => (
                 <th class={`px-1 py-2 font-medium text-center ${d.isToday ? 'bg-wood-100 text-wood-800' : 'text-forest-700'}`} style="min-width:26px">
                   {d.day}
@@ -81,13 +80,21 @@ const fetchedAgo = (() => {
             </tr>
           </thead>
           <tbody>
-            {ROOMS.map((room) => {
+            {orderedRooms.map((room) => {
               const a = byRoom.get(room.slug);
               const bookings = a?.bookings ?? [];
               return (
                 <tr class="border-t border-forest-50">
-                  <th class="sticky left-0 bg-white z-10 text-left px-3 py-2 font-medium text-forest-900 whitespace-nowrap border-r border-forest-100">
-                    <a href={`/rooms/${room.slug}/`} class="hover:text-forest-600">{room.tree}</a>
+                  <th class="sticky left-0 bg-white z-10 text-left px-2 py-2 font-medium text-forest-900 whitespace-nowrap border-r border-forest-100">
+                    <a href={`/rooms/${room.slug}/`} class="flex items-center gap-2 hover:text-forest-600">
+                      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-forest-700 text-cream-50 text-xs font-bold">{room.roomNumber}</span>
+                      <span>
+                        <span class="block">{room.tree}</span>
+                        <span class="block text-[10px] font-normal text-forest-700/70 uppercase tracking-wider">
+                          {room.bathType === 'private' ? 'Private bath' : 'Shared bath'}
+                        </span>
+                      </span>
+                    </a>
                   </th>
                   {m.days.map((d) => {
                     const blocked = isDateBlocked(d.ymd, bookings);
@@ -99,7 +106,7 @@ const fetchedAgo = (() => {
                     return (
                       <td
                         class={`h-8 ${cls}`}
-                        title={`${room.name} · ${d.ymd} · ${d.isPast ? 'Past' : blocked ? 'Booked' : 'Available'}`}
+                        title={`Room ${room.roomNumber} (${room.tree}) · ${d.ymd} · ${d.isPast ? 'Past' : blocked ? 'Booked' : 'Available'}`}
                         style="min-width:26px"
                       ></td>
                     );
@@ -114,6 +121,7 @@ const fetchedAgo = (() => {
   ))}
 
   <p class="text-xs text-forest-700/70 text-center">
-    Hover any cell for the exact date. <a href="/availability/" class="underline">View 6-month calendars →</a>
+    Room numbers match the doors in the house. Hover any cell for date + status.
+    <a href="/availability/" class="underline">View 6-month calendars →</a>
   </p>
 </div>
