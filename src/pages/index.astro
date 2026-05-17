@@ -76,16 +76,21 @@ const audiences = [
   { title: "Relocating to Dayton", body: "Between houses or waiting on closing? Cheaper than a hotel, no 12-month lease, leave the month your house is ready." },
 ];
 
-// Quick property photo strip — pulls one hero image from each room (avoids the Maple block — we still use the photo).
-const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
+// Quick property photo strip on the homepage. Hand-picked good outdoor/common-area shots.
+const photoStrip = [
+  '/photos/buckeye/12.jpeg',  // front of house
+  '/photos/maple/05.jpeg',    // back porch / pool
+  '/photos/buckeye/11.jpeg',  // sandy corner
+  '/photos/sycamore/05.jpeg', // kitchen/living
+];
 ---
 
 <Base>
   {/* ──────────── 1. HERO ──────────── */}
   <section class="relative bg-forest-900 text-cream-50 overflow-hidden">
     <img
-      src="/photos/willow/01.jpeg"
-      alt="Sycamore Getaway kitchen with blue cove lighting"
+      src="/photos/oak/01.jpeg"
+      alt="Sycamore Getaway main kitchen and living area"
       class="absolute inset-0 w-full h-full object-cover opacity-55"
     />
     <div class="absolute inset-0 bg-gradient-to-b from-forest-900/70 via-forest-900/50 to-forest-900/95" aria-hidden="true"></div>
@@ -362,7 +367,7 @@ const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
     {/* Kitchen */}
     <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
       <div class="md:order-2 aspect-[4/3] rounded-3xl overflow-hidden">
-        <img src="/photos/willow/01.jpeg" alt="Shared kitchen with blue cove lighting" class="w-full h-full object-cover" loading="lazy" />
+        <img src="/photos/oak/01.jpeg" alt="Shared kitchen" class="w-full h-full object-cover" loading="lazy" />
       </div>
       <div class="md:order-1">
         <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The shared kitchen</p>

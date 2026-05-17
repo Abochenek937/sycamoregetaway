@@ -15,12 +15,14 @@ export type Room = {
 };
 
 // Photo file lists pulled from Airbnb listings. Filenames track what fetch-airbnb-photos.mjs produced.
+// Photos per room. First entry is the HERO (shown on the room card + top of the room page).
+// Order chosen by Alex from /photo-picker.
 const PHOTOS: Record<string, string[]> = {
-  sycamore: ['/photos/sycamore/01.jpeg','/photos/sycamore/02.jpeg','/photos/sycamore/03.png','/photos/sycamore/04.jpeg','/photos/sycamore/05.jpeg','/photos/sycamore/06.jpeg','/photos/sycamore/07.jpeg','/photos/sycamore/08.jpeg','/photos/sycamore/09.jpeg','/photos/sycamore/10.jpeg','/photos/sycamore/11.jpeg','/photos/sycamore/12.jpeg'],
+  sycamore: ['/photos/sycamore/04.jpeg','/photos/sycamore/01.jpeg','/photos/sycamore/02.jpeg','/photos/sycamore/05.jpeg','/photos/sycamore/06.jpeg','/photos/sycamore/07.jpeg','/photos/sycamore/08.jpeg','/photos/sycamore/09.jpeg','/photos/sycamore/10.jpeg','/photos/sycamore/11.jpeg','/photos/sycamore/12.jpeg'],
   buckeye:  ['/photos/buckeye/01.jpeg','/photos/buckeye/02.jpeg','/photos/buckeye/03.jpeg','/photos/buckeye/04.jpeg','/photos/buckeye/05.jpeg','/photos/buckeye/06.jpeg','/photos/buckeye/07.jpeg','/photos/buckeye/08.jpeg','/photos/buckeye/09.jpeg','/photos/buckeye/10.jpeg','/photos/buckeye/11.jpeg','/photos/buckeye/12.jpeg'],
-  oak:      ['/photos/oak/01.jpeg','/photos/oak/02.jpeg','/photos/oak/03.jpeg','/photos/oak/04.jpeg','/photos/oak/05.jpeg','/photos/oak/06.jpeg','/photos/oak/07.jpg','/photos/oak/08.jpeg','/photos/oak/09.jpeg','/photos/oak/10.jpeg','/photos/oak/11.jpeg','/photos/oak/12.jpeg'],
-  maple:    ['/photos/maple/01.jpeg','/photos/maple/02.jpeg','/photos/maple/03.jpeg','/photos/maple/04.jpeg','/photos/maple/05.jpeg','/photos/maple/06.jpeg','/photos/maple/07.jpeg','/photos/maple/08.jpeg','/photos/maple/09.jpeg','/photos/maple/10.jpeg','/photos/maple/11.jpeg','/photos/maple/12.jpeg'],
-  willow:   ['/photos/willow/01.jpeg','/photos/willow/02.jpeg','/photos/willow/03.jpeg','/photos/willow/04.jpeg','/photos/willow/05.jpeg','/photos/willow/06.jpeg','/photos/willow/07.jpeg','/photos/willow/08.jpeg','/photos/willow/09.jpeg','/photos/willow/10.jpeg','/photos/willow/11.jpeg','/photos/willow/12.jpeg'],
+  oak:      ['/photos/oak/02.jpeg','/photos/oak/01.jpeg','/photos/oak/03.jpeg','/photos/oak/04.jpeg','/photos/oak/05.jpeg','/photos/oak/06.jpeg','/photos/oak/08.jpeg','/photos/oak/09.jpeg','/photos/oak/10.jpeg','/photos/oak/11.jpeg','/photos/oak/12.jpeg'],
+  maple:    ['/photos/maple/03.jpeg','/photos/maple/01.jpeg','/photos/maple/02.jpeg','/photos/maple/04.jpeg','/photos/maple/05.jpeg','/photos/maple/06.jpeg','/photos/maple/07.jpeg','/photos/maple/08.jpeg','/photos/maple/09.jpeg','/photos/maple/10.jpeg','/photos/maple/11.jpeg','/photos/maple/12.jpeg'],
+  willow:   ['/photos/willow/01.jpeg','/photos/willow/02.jpg','/photos/willow/03.jpeg','/photos/willow/04.jpg','/photos/willow/05.jpeg','/photos/willow/06.jpeg','/photos/willow/07.jpeg','/photos/willow/08.jpeg','/photos/willow/09.jpg','/photos/willow/10.jpeg','/photos/willow/11.jpeg','/photos/willow/12.jpeg'],
 };
 
 export const ROOMS: Room[] = [
