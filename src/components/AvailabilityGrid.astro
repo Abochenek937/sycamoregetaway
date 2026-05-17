@@ -1,6 +1,6 @@
 ---
-// Compact "next 90 days" strip grid for all rooms.
-// Each row = a room. Each cell = a day. Green = available, brown = booked.
+// Per-month availability grid, much clearer than a 90-day strip.
+// One row per room. Each cell is a labeled date. Months stack vertically.
 
 import { isDateBlocked } from '../lib/ical';
 import { getAvailability } from '../lib/availability';
@@ -10,22 +10,36 @@ const avail = await getAvailability();
 const byRoom = new Map(avail.map(a => [a.slug, a]));
 
 function pad(n: number) { return String(n).padStart(2, '0'); }
-function dayLabel(d: Date) {
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+// Build 3 months of data starting from today's month
+const now = new Date();
+now.setUTCHours(0,0,0,0);
+const todayYmd = `${now.getUTCFullYear()}-${pad(now.getUTCMonth()+1)}-${pad(now.getUTCDate())}`;
+
+type Cell = { ymd: string; day: number; isToday: boolean; isPast: boolean };
+type Month = { label: string; year: number; days: Cell[] };
+
+const months: Month[] = [];
+for (let i = 0; i < 3; i++) {
+  const first = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + i, 1));
+  const last = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + i + 1, 0));
+  const days: Cell[] = [];
+  for (let d = 1; d <= last.getUTCDate(); d++) {
+    const ymd = `${first.getUTCFullYear()}-${pad(first.getUTCMonth()+1)}-${pad(d)}`;
+    days.push({
+      ymd,
+      day: d,
+      isToday: ymd === todayYmd,
+      isPast: ymd < todayYmd,
+    });
+  }
+  months.push({
+    label: first.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' }),
+    year: first.getUTCFullYear(),
+    days,
+  });
 }
 
-// Build the next 90 days
-const today = new Date();
-today.setUTCHours(0,0,0,0);
-const days: { ymd: string; date: Date; isFirstOfMonth: boolean }[] = [];
-for (let i = 0; i < 90; i++) {
-  const d = new Date(today);
-  d.setUTCDate(d.getUTCDate() + i);
-  const ymd = `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`;
-  days.push({ ymd, date: d, isFirstOfMonth: d.getUTCDate() === 1 || i === 0 });
-}
-
-// Compute fetchedAt label
 const fetchedAt = avail[0]?.fetchedAt ? new Date(avail[0].fetchedAt) : new Date();
 const fetchedAgo = (() => {
   const m = (Date.now() - fetchedAt.getTime()) / 60000;
@@ -35,57 +49,71 @@ const fetchedAgo = (() => {
 })();
 ---
 
-<div class="rounded-3xl border border-forest-100 bg-white overflow-hidden">
-  <div class="px-5 py-4 border-b border-forest-100 flex items-center justify-between flex-wrap gap-3">
-    <div>
-      <h3 class="font-display text-xl text-forest-900">Next 90 days</h3>
-      <p class="text-xs text-forest-700/70 mt-0.5">Live from Airbnb · last sync {fetchedAgo}</p>
-    </div>
+<div class="space-y-6">
+  {/* Header */}
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    <p class="text-sm text-forest-700/80">
+      Live from Airbnb · last sync {fetchedAgo}
+    </p>
     <div class="flex items-center gap-4 text-xs">
-      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-forest-200"></span>Available</span>
-      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-wood-500"></span>Booked</span>
+      <span class="flex items-center gap-1.5"><span class="w-4 h-4 rounded bg-forest-200"></span>Available</span>
+      <span class="flex items-center gap-1.5"><span class="w-4 h-4 rounded bg-wood-500"></span>Booked</span>
+      <span class="flex items-center gap-1.5"><span class="w-4 h-4 rounded bg-forest-100 border border-forest-300"></span>Past</span>
     </div>
   </div>
 
-  <div class="overflow-x-auto">
-    <table class="w-full text-xs">
-      <thead>
-        <tr class="bg-cream-50">
-          <th class="sticky left-0 bg-cream-50 z-10 text-left px-3 py-2 font-medium text-forest-900 min-w-[110px]">Room</th>
-          {days.map((d) => (
-            <th class={`px-0 py-1 font-normal text-forest-700/70 ${d.isFirstOfMonth ? 'border-l-2 border-forest-200' : ''}`} style="min-width:14px">
-              {d.isFirstOfMonth ? <span class="block text-[10px] font-medium text-forest-700">{d.date.toLocaleDateString('en-US',{month:'short'})}</span> : ''}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {ROOMS.map((room) => {
-          const a = byRoom.get(room.slug);
-          const bookings = a?.bookings ?? [];
-          return (
-            <tr class="border-t border-forest-50">
-              <th class="sticky left-0 bg-white z-10 text-left px-3 py-1.5 font-medium text-forest-900 whitespace-nowrap">
-                <a href={`/rooms/${room.slug}/`} class="hover:text-forest-600">{room.tree}</a>
-              </th>
-              {days.map((d) => {
-                const blocked = isDateBlocked(d.ymd, bookings);
-                return (
-                  <td
-                    class={`h-7 ${blocked ? 'bg-wood-500' : 'bg-forest-200/70'} ${d.isFirstOfMonth ? 'border-l-2 border-forest-200' : ''}`}
-                    title={`${room.name} · ${d.ymd} · ${blocked ? 'Booked' : 'Available'}`}
-                    style="min-width:14px"
-                  ></td>
-                );
-              })}
+  {months.map((m) => (
+    <div class="rounded-3xl border border-forest-100 bg-white overflow-hidden">
+      <div class="px-5 py-3 bg-forest-50 border-b border-forest-100 flex items-baseline justify-between">
+        <h3 class="font-display text-xl text-forest-900">{m.label}</h3>
+        <span class="text-sm text-forest-700/70">{m.year}</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs border-collapse">
+          <thead>
+            <tr class="bg-cream-50">
+              <th class="sticky left-0 bg-cream-50 z-10 text-left px-3 py-2 font-medium text-forest-900 min-w-[110px] border-r border-forest-100">Room</th>
+              {m.days.map((d) => (
+                <th class={`px-1 py-2 font-medium text-center ${d.isToday ? 'bg-wood-100 text-wood-800' : 'text-forest-700'}`} style="min-width:26px">
+                  {d.day}
+                </th>
+              ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  </div>
+          </thead>
+          <tbody>
+            {ROOMS.map((room) => {
+              const a = byRoom.get(room.slug);
+              const bookings = a?.bookings ?? [];
+              return (
+                <tr class="border-t border-forest-50">
+                  <th class="sticky left-0 bg-white z-10 text-left px-3 py-2 font-medium text-forest-900 whitespace-nowrap border-r border-forest-100">
+                    <a href={`/rooms/${room.slug}/`} class="hover:text-forest-600">{room.tree}</a>
+                  </th>
+                  {m.days.map((d) => {
+                    const blocked = isDateBlocked(d.ymd, bookings);
+                    const cls = d.isPast
+                      ? 'bg-forest-100 border border-forest-200'
+                      : blocked
+                        ? 'bg-wood-500'
+                        : 'bg-forest-200 hover:bg-forest-300 transition-colors';
+                    return (
+                      <td
+                        class={`h-8 ${cls}`}
+                        title={`${room.name} · ${d.ymd} · ${d.isPast ? 'Past' : blocked ? 'Booked' : 'Available'}`}
+                        style="min-width:26px"
+                      ></td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  ))}
 
-  <div class="px-5 py-3 text-xs text-forest-700/70 border-t border-forest-100">
-    Availability updates from Airbnb a few times a day. Hover any cell for the date. <a href="/availability/" class="underline">View full 6-month calendar →</a>
-  </div>
+  <p class="text-xs text-forest-700/70 text-center">
+    Hover any cell for the exact date. <a href="/availability/" class="underline">View 6-month calendars →</a>
+  </p>
 </div>

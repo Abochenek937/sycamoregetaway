@@ -90,7 +90,13 @@ const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
     />
     <div class="absolute inset-0 bg-gradient-to-b from-forest-900/70 via-forest-900/50 to-forest-900/95" aria-hidden="true"></div>
     <div class="relative max-w-6xl mx-auto px-5 py-24 md:py-36">
-      <p class="font-medium tracking-wider uppercase text-cream-200/80 text-sm">{PROPERTY.city}</p>
+      <div class="flex items-center gap-3 flex-wrap">
+        <p class="font-medium tracking-wider uppercase text-cream-200/80 text-sm">{PROPERTY.city}</p>
+        <span class="inline-flex items-center gap-1.5 bg-wood-500/20 border border-wood-400/40 text-wood-100 text-xs font-medium px-3 py-1 rounded-full backdrop-blur">
+          <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+          Airbnb Superhost
+        </span>
+      </div>
       <h1 class="font-display text-5xl md:text-7xl mt-3 leading-[1.05] max-w-3xl">
         A quiet, modern house in the woods.
       </h1>
@@ -409,7 +415,13 @@ const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
   {/* ──────────── 9. HOW BOOKING WORKS ──────────── */}
   <section class="bg-cream-100 py-16">
     <div class="max-w-5xl mx-auto px-5">
-      <h2 class="font-display text-3xl text-forest-900 text-center">How booking works</h2>
+      <div class="text-center">
+        <span class="inline-flex items-center gap-2 bg-wood-50 border border-wood-200 text-wood-800 text-sm font-medium px-4 py-1.5 rounded-full">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+          Airbnb Superhost · 5★ reviews
+        </span>
+      </div>
+      <h2 class="font-display text-3xl text-forest-900 text-center mt-4">How booking works</h2>
       <div class="mt-10 grid md:grid-cols-3 gap-6">
         <div class="bg-white border border-forest-100 rounded-2xl p-6">
           <div class="w-10 h-10 rounded-full bg-forest-100 text-forest-700 flex items-center justify-center font-display">1</div>

@@ -41,8 +41,8 @@ export const ROOMS: Room[] = [
     name: "The Buckeye Room",
     tree: "Buckeye",
     bed: "King bed",
-    bath: "Shared bathroom",
-    perks: ["King bed", "Work desk", "Smart TV", "Shared bath", "Ohio through and through"],
+    bath: "Shared bathrooms (two in the house)",
+    perks: ["King bed", "Work desk", "Smart TV", "Shared bathrooms", "Ohio through and through"],
     blurb:
       "Named for the state tree. King bed, work desk, and a smart TV. Steps from one of the two shared bathrooms — a favorite for Ohio State fans and homesick Buckeyes passing through Dayton.",
     airbnbUrl: "https://www.airbnb.com/rooms/1111425818356469330",
@@ -54,8 +54,8 @@ export const ROOMS: Room[] = [
     name: "The Oak Room",
     tree: "Oak",
     bed: "King bed",
-    bath: "Shared bathroom",
-    perks: ["King bed", "Work desk", "Smart TV", "Shared bath", "Steps from the kitchen"],
+    bath: "Shared bathrooms (two in the house)",
+    perks: ["King bed", "Work desk", "Smart TV", "Shared bathrooms", "Steps from the kitchen"],
     blurb:
       "Solid, simple, well-rested. King bed, work desk, and a smart TV. Short walk to the shared kitchen and the inner deck.",
     airbnbUrl: "https://www.airbnb.com/rooms/759999645287941690",
@@ -67,8 +67,8 @@ export const ROOMS: Room[] = [
     name: "The Maple Room",
     tree: "Maple",
     bed: "King bed",
-    bath: "Shared bathroom",
-    perks: ["King bed", "Smart TV", "Shared bath", "Bright morning light"],
+    bath: "Shared bathrooms (two in the house)",
+    perks: ["King bed", "Smart TV", "Shared bathrooms", "Bright morning light"],
     blurb:
       "King bed with morning light filtering through the trees and a smart TV for the evening wind-down. Shares the second common bathroom with the Willow room.",
     // Public URL confirmed working when we scraped photos.
@@ -81,8 +81,8 @@ export const ROOMS: Room[] = [
     name: "The Willow Room",
     tree: "Willow",
     bed: "Queen bed",
-    bath: "Shared bathroom",
-    perks: ["Queen bed", "Work desk", "Smart TV", "Shared bath", "Cozy footprint"],
+    bath: "Shared bathrooms (two in the house)",
+    perks: ["Queen bed", "Work desk", "Smart TV", "Shared bathrooms", "Cozy footprint"],
     blurb:
       "The cozy one. Queen bed, work desk, and a smart TV. A solid solo or couple's room with a calm corner-of-the-house feel.",
     airbnbUrl: "https://www.airbnb.com/rooms/560037966152727439",
