@@ -84,8 +84,8 @@ const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
   {/* ──────────── 1. HERO ──────────── */}
   <section class="relative bg-forest-900 text-cream-50 overflow-hidden">
     <img
-      src="/photos/sycamore/01.jpeg"
-      alt="Sycamore Getaway property"
+      src="/photos/willow/01.jpeg"
+      alt="Sycamore Getaway kitchen with blue cove lighting"
       class="absolute inset-0 w-full h-full object-cover opacity-55"
     />
     <div class="absolute inset-0 bg-gradient-to-b from-forest-900/70 via-forest-900/50 to-forest-900/95" aria-hidden="true"></div>
@@ -345,16 +345,8 @@ const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
 
     {/* Sandy corner */}
     <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
-      <div class="aspect-[4/3] rounded-3xl bg-gradient-to-br from-wood-300 via-wood-200 to-forest-200 relative overflow-hidden">
-        <div class="absolute inset-0 flex items-center justify-center">
-          <svg viewBox="0 0 200 120" class="w-3/4 opacity-70" aria-hidden="true">
-            <circle cx="160" cy="50" r="20" fill="var(--color-wood-500)" opacity="0.8"/>
-            <path d="M0 100 Q 50 80 100 95 T 200 100 V 120 H 0 Z" fill="var(--color-wood-400)"/>
-            <path d="M40 100 L 50 85 L 60 100 Z" fill="var(--color-forest-700)"/>
-            <path d="M50 100 L 60 80 L 70 100 Z" fill="var(--color-forest-800)"/>
-          </svg>
-        </div>
-        <div class="absolute bottom-3 left-3 text-xs text-forest-800 bg-cream-50/90 px-2.5 py-1 rounded-full">Photo coming soon</div>
+      <div class="aspect-[4/3] rounded-3xl overflow-hidden">
+        <img src="/photos/buckeye/11.jpeg" alt="Sandy clearing with fire pit at sunset" class="w-full h-full object-cover" loading="lazy" />
       </div>
       <div>
         <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The sandy corner</p>
@@ -369,17 +361,8 @@ const photoStrip = ROOMS.map((r) => r.photos[0]).filter(Boolean);
 
     {/* Kitchen */}
     <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
-      <div class="md:order-2 aspect-[4/3] rounded-3xl bg-gradient-to-br from-cream-200 via-wood-100 to-cream-100 relative overflow-hidden">
-        <div class="absolute inset-0 flex items-center justify-center">
-          <svg viewBox="0 0 200 120" class="w-3/4 opacity-70" aria-hidden="true">
-            <rect x="30" y="40" width="60" height="50" rx="4" fill="var(--color-wood-600)"/>
-            <rect x="35" y="45" width="20" height="40" fill="var(--color-cream-50)" opacity="0.4"/>
-            <rect x="100" y="60" width="70" height="30" rx="3" fill="var(--color-wood-500)"/>
-            <circle cx="135" cy="55" r="6" fill="var(--color-forest-700)"/>
-            <rect x="40" y="25" width="120" height="6" fill="var(--color-wood-700)"/>
-          </svg>
-        </div>
-        <div class="absolute bottom-3 left-3 text-xs text-forest-800 bg-cream-50/90 px-2.5 py-1 rounded-full">Photo coming soon</div>
+      <div class="md:order-2 aspect-[4/3] rounded-3xl overflow-hidden">
+        <img src="/photos/willow/01.jpeg" alt="Shared kitchen with blue cove lighting" class="w-full h-full object-cover" loading="lazy" />
       </div>
       <div class="md:order-1">
         <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The shared kitchen</p>
