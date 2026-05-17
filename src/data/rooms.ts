@@ -20,20 +20,20 @@ export type Room = {
 // First photo in each room's array is the HERO (room card + top of room page).
 
 const PROPERTY_PHOTOS = {
-  master:        ['/photos/master/01.jpeg','/photos/master/02.png','/photos/master/03.jpeg','/photos/master/04.jpeg','/photos/master/05.jpeg','/photos/master/06.jpeg','/photos/master/07.jpeg','/photos/master/08.jpeg','/photos/master/09.jpeg','/photos/master/10.jpeg'],
-  kitchenLiving: ['/photos/kitchen-living/01.jpeg','/photos/kitchen-living/02.jpeg','/photos/kitchen-living/03.jpeg','/photos/kitchen-living/04.jpeg','/photos/kitchen-living/05.jpeg','/photos/kitchen-living/06.jpeg','/photos/kitchen-living/07.jpeg','/photos/kitchen-living/08.jpeg','/photos/kitchen-living/09.jpeg','/photos/kitchen-living/10.jpeg','/photos/kitchen-living/11.jpeg','/photos/kitchen-living/12.jpeg'],
-  pool:          ['/photos/back-porch-pool/01.jpeg','/photos/back-porch-pool/02.jpeg','/photos/back-porch-pool/03.jpeg','/photos/back-porch-pool/04.jpeg','/photos/back-porch-pool/05.jpeg','/photos/back-porch-pool/06.jpeg'],
-  courtyard:     ['/photos/courtyard/01.jpeg','/photos/courtyard/02.jpeg','/photos/courtyard/03.jpeg'],
+  master:        ['/photos/master/01.jpeg','/photos/master/02.png','/photos/master/03.jpeg','/photos/master/04.jpeg','/photos/master/05.jpeg','/photos/master/06.jpeg','/photos/master/07.jpeg','/photos/master/08.jpeg','/photos/master/09.jpeg'],
+  kitchenLiving: ['/photos/kitchen-living/01.jpeg','/photos/kitchen-living/02.jpeg','/photos/kitchen-living/04.jpeg','/photos/kitchen-living/05.jpeg','/photos/kitchen-living/06.jpeg','/photos/kitchen-living/07.jpeg','/photos/kitchen-living/08.jpeg','/photos/kitchen-living/09.jpeg','/photos/kitchen-living/10.jpeg','/photos/kitchen-living/11.jpeg','/photos/kitchen-living/12.jpeg','/photos/kitchen-living/13.jpeg','/photos/kitchen-living/14.jpeg'],
+  pool:          ['/photos/back-porch-pool/01.jpeg','/photos/back-porch-pool/02.jpeg','/photos/back-porch-pool/03.jpeg','/photos/back-porch-pool/04.jpeg','/photos/back-porch-pool/05.jpeg','/photos/back-porch-pool/06.jpeg','/photos/back-porch-pool/07.jpeg'],
+  courtyard:     ['/photos/courtyard/01.jpeg'],
   sandy:         ['/photos/sandy/01.jpeg'],
-  front:         ['/photos/front-of-house/01.jpeg','/photos/front-of-house/02.jpg','/photos/front-of-house/03.jpg','/photos/front-of-house/04.jpeg'],
-  bathroom:      ['/photos/bathroom/01.jpeg','/photos/bathroom/02.jpeg'],
+  front:         ['/photos/front-of-house/01.jpeg','/photos/front-of-house/02.jpg'],
+  bathroom:      ['/photos/bathroom/01.jpeg','/photos/bathroom/02.jpeg','/photos/bathroom/03.jpeg'],
 };
 
 const BEDROOMS = {
   buckeye: ['/photos/buckeye-bedroom/01.jpeg','/photos/buckeye-bedroom/02.jpeg','/photos/buckeye-bedroom/03.jpeg'],
   oak:     ['/photos/oak-bedroom/01.jpeg','/photos/oak-bedroom/02.jpeg','/photos/oak-bedroom/03.jpeg'],
   maple:   ['/photos/maple-bedroom/01.jpeg','/photos/maple-bedroom/02.jpeg','/photos/maple-bedroom/03.jpeg','/photos/maple-bedroom/04.jpeg'],
-  // Willow: no bedroom photos uploaded yet — use a placeholder + property shots only.
+  willow:  ['/photos/willow-bedroom/01.jpg'], // closet shot — only Willow photo we have so far
 };
 
 // Compose each room's photo list: bedroom first (hero), then property scenes the guest can enjoy.
@@ -42,8 +42,8 @@ const PHOTOS: Record<string, string[]> = {
   buckeye:  [...BEDROOMS.buckeye, ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
   oak:      [...BEDROOMS.oak,     ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
   maple:    [...BEDROOMS.maple,   ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
-  // Willow has no dedicated bedroom photos yet. Use placeholder + property shots so the page isn't empty.
-  willow:   [...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.courtyard, ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
+  // Willow now has 1 closet shot. Lead with that, then property amenities.
+  willow:   [...BEDROOMS.willow, ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
 };
 
 export { PROPERTY_PHOTOS };
