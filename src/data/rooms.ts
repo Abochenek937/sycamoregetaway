@@ -38,7 +38,8 @@ const BEDROOMS = {
 
 // Compose each room's photo list: bedroom first (hero), then property scenes the guest can enjoy.
 const PHOTOS: Record<string, string[]> = {
-  sycamore: [...PROPERTY_PHOTOS.master, ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.bathroom],
+  // Sycamore hero: master/04.jpeg (Alex pick). Then the rest of the master + kitchen + bath.
+  sycamore: ['/photos/master/04.jpeg', ...PROPERTY_PHOTOS.master.filter(p => p !== '/photos/master/04.jpeg'), ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.bathroom],
   buckeye:  [...BEDROOMS.buckeye, ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
   oak:      [...BEDROOMS.oak,     ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
   maple:    [...BEDROOMS.maple,   ...PROPERTY_PHOTOS.kitchenLiving.slice(0, 3), ...PROPERTY_PHOTOS.pool.slice(0, 2), ...PROPERTY_PHOTOS.bathroom],
