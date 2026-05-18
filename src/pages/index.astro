@@ -64,13 +64,14 @@ const compareRows = [
   { label: "Cleaning fee",                         room: "$0 — none", master: "$0 — none", hotel: "$15–30 resort fee", apt: "$150–300 move-out" },
   { label: "Rate lock (no rent hikes)",            room: "Locked for your stay", master: "Locked for your stay", hotel: "Rate changes nightly", apt: "Renewal hike at end of lease" },
   { label: "Full kitchen",                         room: "Yes",      master: "Yes",      hotel: "No",        apt: "Yes" },
+  { label: "Washer + dryer",                       room: "In-house, free", master: "In-house, free", hotel: "$3–5/load or send out", apt: "You buy them" },
   { label: "Wooded acreage",                       room: "6 acres + 55 next door", master: "6 acres + 55 next door", hotel: "Parking lot", apt: "Apartment grid" },
   { label: "Cleaning / maintenance",               room: "Handled",  master: "Handled",  hotel: "Handled",   apt: "You handle it" },
 ];
 
 const audiences = [
-  { title: "Travel nurses", body: "13-week contracts at Kettering, Miami Valley, Premier Health, or Dayton Children's. Quiet sleep between night shifts, full kitchen, flexible cancellation if your contract ends early." },
-  { title: "Construction crews", body: "Project teams working sites in the Dayton metro. King beds, free parking for the trucks, and space to actually rest after a long day." },
+  { title: "Travel nurses", body: "13-week contracts at Kettering, Miami Valley, Premier Health, or Dayton Children's. Quiet sleep between night shifts, full kitchen, washer + dryer for scrubs, flexible cancellation if your contract ends early." },
+  { title: "Construction crews", body: "Project teams working sites in the Dayton metro. King beds, free parking for the trucks, washer + dryer for muddy work clothes, and space to actually rest after a long day." },
   { title: "Students & interns", body: "Wright State, Sinclair, UD, and summer interns at Wright-Patt. Cheaper than a sublease, no lease, fast Wi-Fi." },
   { title: "Military & contractors", body: "PCS-ing through Wright-Patt AFB, on temporary duty, or visiting family stationed there. Quiet, 25 minutes from base, no lease." },
   { title: "Relocating to Dayton", body: "Between houses or waiting on closing? Cheaper than a hotel, no 12-month lease, leave the month your house is ready." },
@@ -107,7 +108,7 @@ const photoStrip = [
       </h1>
       <p class="mt-6 text-lg md:text-xl text-cream-100/90 max-w-2xl">
         Long stays for travel nurses, construction crews, students, and people in transition.
-        From <strong>${ROOM_NIGHTLY}/night</strong>, no lease, no cleaning fee.
+        From <strong>${ROOM_NIGHTLY}/night</strong>, no lease, no cleaning fee, washer + dryer included.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a
