@@ -4,7 +4,7 @@
 npm create astro@latest -- --template minimal
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+> 🧑‍🚀 **Seasoned astronaut?** Delete th is file. Have fun!
 
 ## 🚀 Project Structure
 
