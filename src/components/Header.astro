@@ -30,7 +30,7 @@ const path = Astro.url.pathname;
       ))}
     </nav>
     <a
-      href="#book"
+      href="/#rooms"
       class="hidden md:inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-4 py-2 text-sm font-medium transition-colors"
     >
       Book a room
@@ -45,7 +45,7 @@ const path = Astro.url.pathname;
         {links.map((l) => (
           <a href={l.href} class="block px-3 py-2 rounded-lg text-forest-800 hover:bg-forest-50">{l.label}</a>
         ))}
-        <a href="#book" class="block mt-1 px-3 py-2 rounded-lg bg-forest-700 text-white text-center">Book a room</a>
+        <a href="/#rooms" class="block mt-1 px-3 py-2 rounded-lg bg-forest-700 text-white text-center">Book a room</a>
       </div>
     </details>
   </div>
