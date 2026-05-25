@@ -1,0 +1,28 @@
+---
+import Base from "../layouts/Base.astro";
+
+const audience = "Travel Nurses";
+const target = "Kettering Health";
+const headline = "Long-stay housing for travel nurses at Kettering Health.";
+const intro =
+  "Sycamore Getaway is a quiet, modern 5-bedroom house about 15 minutes from Kettering Health Main Campus — purpose-built for 13-week contracts. King beds, full shared kitchen, washer + dryer for scrubs, and zero lease lock-in if your assignment ends early.";
+const intro2 =
+  "Travel nurses make up a solid share of our long-stay guests. The 22-night minimum filters out the weekend party noise, and the layout was designed for people working night shifts who actually need to sleep during the day.";
+---
+
+<Base
+  title="Travel Nurse Housing near Kettering Health — Dayton, OH"
+  description="Quiet long-stay rooms 15 minutes from Kettering Health Main Campus. King beds, full kitchen, washer/dryer, no lease. Built for 13-week travel nurse contracts."
+>
+  <section class="max-w-4xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{audience} · {target}</p>
+    <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">{headline}</h1>
+    <p class="mt-6 text-lg text-forest-800/90">{intro}</p>
+    <p class="mt-4 text-lg text-forest-800/90">{intro2}</p>
+
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href="/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See the house</a>
+      <a href="/availability/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Check availability</a>
+    </div>
+  </section>
+</Base>

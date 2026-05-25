@@ -1,0 +1,28 @@
+---
+import Base from "../layouts/Base.astro";
+
+const audience = "Extended Stay";
+const target = "Wright-Patterson AFB";
+const headline = "Extended-stay lodging near Wright-Patterson AFB.";
+const intro =
+  "About 25 minutes from Wright-Patterson AFB, Sycamore Getaway is a private-room option for PCS, TDY, military contractors, and families visiting service members. Quiet 5-bedroom house on six wooded acres with a 22-night minimum stay.";
+const intro2 =
+  "Cheaper than a hotel for any stay over two weeks, with a real kitchen, free in-house washer and dryer, fast Wi-Fi, and no lease. Pay per night, locked in for the full stay.";
+---
+
+<Base
+  title="Extended Stay near Wright-Patterson AFB — Sycamore Getaway, Dayton OH"
+  description="Long-stay rooms about 25 minutes from Wright-Patterson AFB. Private rooms, full kitchen, washer/dryer, fast Wi-Fi. Built for PCS, TDY, contractors, and military families."
+>
+  <section class="max-w-4xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{audience} · {target}</p>
+    <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">{headline}</h1>
+    <p class="mt-6 text-lg text-forest-800/90">{intro}</p>
+    <p class="mt-4 text-lg text-forest-800/90">{intro2}</p>
+
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href="/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See the house</a>
+      <a href="/availability/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Check availability</a>
+    </div>
+  </section>
+</Base>

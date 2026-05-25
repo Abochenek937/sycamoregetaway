@@ -1,0 +1,28 @@
+---
+import Base from "../layouts/Base.astro";
+
+const audience = "Travel Nurses";
+const target = "Miami Valley Hospital";
+const headline = "Long-stay housing for travel nurses at Miami Valley Hospital.";
+const intro =
+  "About 18 minutes from Miami Valley Hospital, Sycamore Getaway gives travel nurses a quiet, private room in a 5-bedroom house on six wooded acres. King bed, full shared kitchen, washer + dryer included, no cleaning fee, no 12-month lease.";
+const intro2 =
+  "Designed around the realities of contract work — flexible cancellation, locked-in nightly rate, and the kind of quiet that makes day-sleeping after a night shift actually possible.";
+---
+
+<Base
+  title="Travel Nurse Housing near Miami Valley Hospital — Dayton, OH"
+  description="Quiet long-stay rooms 18 minutes from Miami Valley Hospital. Private rooms, full kitchen, washer/dryer, no lease. Built for 13-week travel nurse contracts."
+>
+  <section class="max-w-4xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{audience} · {target}</p>
+    <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">{headline}</h1>
+    <p class="mt-6 text-lg text-forest-800/90">{intro}</p>
+    <p class="mt-4 text-lg text-forest-800/90">{intro2}</p>
+
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href="/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See the house</a>
+      <a href="/availability/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Check availability</a>
+    </div>
+  </section>
+</Base>

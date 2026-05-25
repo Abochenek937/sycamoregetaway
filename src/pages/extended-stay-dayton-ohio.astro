@@ -1,0 +1,28 @@
+---
+import Base from "../layouts/Base.astro";
+
+const audience = "Extended Stay";
+const target = "Dayton, Ohio";
+const headline = "Extended-stay housing in Dayton, Ohio.";
+const intro =
+  "Sycamore Getaway is a quiet, modern 5-bedroom house in southwest Dayton, designed for guests staying 22 nights or more. Travel professionals, construction crews, students, military, and people in transition all live here in a single shared house on six wooded acres.";
+const intro2 =
+  "Less than a hotel, no lease, no cleaning fee, no rent hikes. Furnished rooms, full kitchen, washer + dryer, fast Wi-Fi, and a calendar that's actually flexible.";
+---
+
+<Base
+  title="Extended Stay Housing in Dayton, Ohio — Sycamore Getaway"
+  description="Long-stay rooms in southwest Dayton. Private furnished rooms, full kitchen, washer/dryer, fast Wi-Fi. 22-night minimum. No lease, no cleaning fee, locked nightly rate."
+>
+  <section class="max-w-4xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{audience} · {target}</p>
+    <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">{headline}</h1>
+    <p class="mt-6 text-lg text-forest-800/90">{intro}</p>
+    <p class="mt-4 text-lg text-forest-800/90">{intro2}</p>
+
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href="/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See the house</a>
+      <a href="/availability/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Check availability</a>
+    </div>
+  </section>
+</Base>

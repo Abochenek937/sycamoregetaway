@@ -1,0 +1,28 @@
+---
+import Base from "../layouts/Base.astro";
+
+const audience = "Student & Intern Housing";
+const target = "Wright State University";
+const headline = "Off-campus housing near Wright State University.";
+const intro =
+  "About 20 minutes from Wright State, Sycamore Getaway offers private furnished rooms in a 5-bedroom house — built for students on rotations, interns at Wright-Patt, and grad students who need a real place to live without signing a year-long lease.";
+const intro2 =
+  "Quiet enough to study. Cheap enough to make sense as an alternative to dorms or a sublease. King beds, fast Wi-Fi, full kitchen, washer + dryer, locked nightly rate for the length of your stay.";
+---
+
+<Base
+  title="Wright State University Housing — Sycamore Getaway, Dayton OH"
+  description="Off-campus furnished rooms about 20 minutes from Wright State University. Private rooms, full kitchen, fast Wi-Fi, washer/dryer. 22-night minimum, no lease."
+>
+  <section class="max-w-4xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{audience} · {target}</p>
+    <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">{headline}</h1>
+    <p class="mt-6 text-lg text-forest-800/90">{intro}</p>
+    <p class="mt-4 text-lg text-forest-800/90">{intro2}</p>
+
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href="/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See the house</a>
+      <a href="/availability/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Check availability</a>
+    </div>
+  </section>
+</Base>
