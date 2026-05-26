@@ -8,12 +8,71 @@ const intro =
   "Sycamore Getaway is a quiet, modern 5-bedroom house about 15 minutes from Kettering Health Main Campus — purpose-built for 13-week contracts. King beds, full shared kitchen, washer + dryer for scrubs, and zero lease lock-in if your assignment ends early.";
 const intro2 =
   "Travel nurses make up a solid share of our long-stay guests. The 22-night minimum filters out the weekend party noise, and the layout was designed for people working night shifts who actually need to sleep during the day.";
+
+const reasons = [
+  {
+    title: "15 minutes from Main Campus",
+    body: "Straight shot to Kettering Health Main Campus. Sycamore, Grandview, Soin, and Greene Memorial are all within reasonable drive too if your unit floats.",
+  },
+  {
+    title: "Built for day sleep",
+    body: "Six wooded acres in southwest Dayton. No bar district, no highway noise, no party guests — the 22-night minimum keeps it that way.",
+  },
+  {
+    title: "Washer + dryer for scrubs",
+    body: "Free, in-house, unlimited. Wash a set of scrubs after a shift without packing them to a laundromat or paying $4 a load at a hotel.",
+  },
+  {
+    title: "No lease, no cleaning fee",
+    body: "Pay by the night. If your contract gets canceled or extended, you adjust your dates — no break fees, no deposit fight.",
+  },
+];
+
+const faqs = [
+  {
+    q: "Can I cancel if my contract ends early?",
+    a: "Yes. Our cancellation is flexible through the end of the current month — far easier to unwind than a 12-month apartment lease. If your contract gets cut at week six, you're not on the hook for week seven through fifty-two.",
+  },
+  {
+    q: "Are other travel nurses staying there?",
+    a: "Often, yes. We get a steady stream of contract nurses from Kettering Health, Miami Valley, Premier, and Dayton Children's. It tends to be a quiet, professional house — people working real schedules, not vacationers.",
+  },
+  {
+    q: "Is it quiet enough to sleep during the day after a night shift?",
+    a: "Yes. The house sits on six wooded acres in a residential area next to Jefferson Township High School — no through traffic, no bars nearby. Rooms have blackout-capable window coverings. The 22-night minimum keeps weekend party bookings out.",
+  },
+  {
+    q: "Is parking included? Can I park a hospital-tagged vehicle here?",
+    a: "Free parking on the property, no permit needed. There's plenty of room for personal vehicles. Hospital parking tags stay on your car — they only matter at the hospital lot.",
+  },
+  {
+    q: "Can I get a receipt for tax or per-diem documentation?",
+    a: "Airbnb generates a receipt for every payment, which works for travel-nurse per-diem and stipend documentation. If you need anything else broken out, just ask.",
+  },
+  {
+    q: "What if my contract extends past my original booking?",
+    a: "Just extend your stay on Airbnb. As long as the room is open on the calendar, you keep the same nightly rate — no renewal hike.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
 ---
 
 <Base
   title="Travel Nurse Housing near Kettering Health — Dayton, OH"
   description="Quiet long-stay rooms 15 minutes from Kettering Health Main Campus. King beds, full kitchen, washer/dryer, no lease. Built for 13-week travel nurse contracts."
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  {/* HERO */}
   <section class="max-w-4xl mx-auto px-5 py-20">
     <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{audience} · {target}</p>
     <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">{headline}</h1>
@@ -24,5 +83,154 @@ const intro2 =
       <a href="/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See the house</a>
       <a href="/availability/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Check availability</a>
     </div>
+  </section>
+
+  {/* WHY IT WORKS */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-5xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Why it fits a contract</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Designed around the realities of contract nursing.</h2>
+      <p class="mt-4 text-forest-800/90 max-w-3xl">
+        We didn't add "travel nurse" to a generic vacation rental listing. The setup is genuinely
+        built for people working 13-week assignments — same schedule, same laundry needs, same
+        cancellation risk, same exhaustion.
+      </p>
+      <div class="mt-8 grid sm:grid-cols-2 gap-5">
+        {reasons.map((r) => (
+          <div class="rounded-3xl border border-forest-100 bg-white p-6">
+            <h3 class="font-display text-xl text-forest-900">{r.title}</h3>
+            <p class="mt-2 text-sm text-forest-800/85 leading-relaxed">{r.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* THE MATH */}
+  <section class="max-w-5xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The math</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Cheaper than a hotel. Less hassle than an apartment.</h2>
+    <p class="mt-4 text-forest-800/90 max-w-3xl">
+      Agency-provided housing is fine when it shows up. When it doesn't — or when the stipend
+      barely covers a long-stay hotel — the math gets brutal fast.
+    </p>
+
+    <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <div class="rounded-3xl bg-white border border-forest-100 p-6">
+        <p class="text-forest-600 text-sm">30-night mid-range hotel</p>
+        <p class="font-display text-3xl text-forest-900 mt-2">~$4,400+</p>
+        <p class="mt-3 text-xs text-forest-700/80">~$130/night + paid parking. No kitchen, no laundry.</p>
+      </div>
+      <div class="rounded-3xl bg-white border border-forest-100 p-6">
+        <p class="text-forest-600 text-sm">1BR apartment</p>
+        <p class="font-display text-3xl text-forest-900 mt-2">~$1,700/mo</p>
+        <p class="mt-3 text-xs text-forest-700/80">All-in with utilities, internet, furniture rental, deposit. Plus a 12-month lease.</p>
+      </div>
+      <div class="rounded-3xl bg-forest-700 text-cream-50 p-6 border-2 border-wood-500">
+        <p class="text-cream-200/80 text-sm">Sycamore Getaway</p>
+        <p class="font-display text-3xl mt-2">From $35/night</p>
+        <p class="mt-3 text-xs text-cream-100/90">Standard room ~$1,200/mo all-in. Master Suite ~$1,500/mo.</p>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-3xl border border-forest-100 bg-cream-100 p-6">
+      <h3 class="font-display text-xl text-forest-900">What's included at no extra cost</h3>
+      <ul class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-forest-800/90">
+        <li>• Fast Wi-Fi (charting, streaming, video calls)</li>
+        <li>• Free parking on the property</li>
+        <li>• In-house washer + dryer, free, unlimited</li>
+        <li>• Full shared kitchen — stove, oven, fridge, dishwasher</li>
+        <li>• $0 cleaning fee, ever</li>
+        <li>• Locked nightly rate for your whole stay</li>
+        <li>• Self check-in via smart lock</li>
+        <li>• Flexible cancellation through end of month</li>
+      </ul>
+    </div>
+  </section>
+
+  {/* LOGISTICS */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-4xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Logistics</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">The stuff that actually matters mid-contract.</h2>
+      <div class="mt-6 space-y-5 text-forest-800/90 leading-relaxed">
+        <p>
+          <strong class="text-forest-900">Drive time:</strong> ~15 minutes to Kettering Health Main Campus. ~18 minutes to Miami Valley
+          if you cross-credential or pick up shifts elsewhere. ~20 minutes to Premier Health / Good Sam,
+          Dayton Children's, and the Dayton VA. If your assignment floats or you pick up extras at another
+          system, you don't have to move.
+        </p>
+        <p>
+          <strong class="text-forest-900">Day-sleep:</strong> Southwest Dayton, next to Jefferson Township High School. Residential, wooded,
+          no through-traffic, no bars. The house is U-shaped around a central deck, so most rooms don't
+          share walls. Rooms are set up with blackout-capable coverings.
+        </p>
+        <p>
+          <strong class="text-forest-900">Laundry:</strong> Free in-house washer + dryer. No quarters, no shared coin-op, no laundromat
+          run after a 12-hour shift. Most contract nurses run a quick scrub load every couple of days.
+        </p>
+        <p>
+          <strong class="text-forest-900">Wi-Fi:</strong> Fast enough for charting catch-up, telehealth modules, video calls home, and
+          streaming. Whole-house coverage including the deck.
+        </p>
+        <p>
+          <strong class="text-forest-900">Groceries:</strong> Kroger is ~12 minutes east. Full kitchen means you actually cook — way
+          cheaper than a daily DoorDash habit on stipend money, and you control the protein/sodium math
+          better than hospital cafeteria food.
+        </p>
+        <p>
+          <strong class="text-forest-900">If your contract changes:</strong> Extensions are easy — just extend the booking. Early
+          terminations are easier here than anywhere else; flexible cancellation through end of month
+          means you're never staring down a five-figure lease break.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ROOMS */}
+  <section class="max-w-4xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The rooms</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Five private rooms. King beds in four of them.</h2>
+    <p class="mt-4 text-forest-800/90 max-w-3xl">
+      Each room books individually on Airbnb. Four rooms have king beds; the Willow room has a queen.
+      The Sycamore Suite is the master — king bed, private en-suite bath, and a desk for charting.
+      The other four rooms share two common bathrooms. Pricing starts at $35/night for standard rooms
+      and $44/night for the Sycamore Suite.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/rooms/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See all 5 rooms</a>
+      <a href="/the-house/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Tour the house</a>
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-3xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">FAQ</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Common questions from travel nurses.</h2>
+      <div class="mt-8 space-y-6">
+        {faqs.map((f) => (
+          <div class="rounded-3xl border border-forest-100 bg-white p-6">
+            <h3 class="font-display text-xl text-forest-900">{f.q}</h3>
+            <p class="mt-2 text-forest-800/90 leading-relaxed">{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CLOSING */}
+  <section class="max-w-3xl mx-auto px-5 py-20 text-center">
+    <h2 class="font-display text-3xl md:text-4xl text-forest-900">Check availability for your contract dates.</h2>
+    <p class="mt-4 text-forest-800/90">
+      Five rooms, live calendar, 22-night minimum. Lock in your nightly rate for the whole assignment.
+    </p>
+    <a href="/availability/" class="mt-8 inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-7 py-3 font-medium transition-colors">
+      View live availability
+      <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="mt-6 text-sm text-forest-700/70">
+      Want to look around first? <a href="/area/" class="underline">See the area</a> · <a href="/faq/" class="underline">general FAQ</a>
+    </p>
   </section>
 </Base>

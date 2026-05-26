@@ -8,12 +8,71 @@ const intro =
   "About 25 minutes from Wright-Patterson AFB, Sycamore Getaway is a private-room option for PCS, TDY, military contractors, and families visiting service members. Quiet 5-bedroom house on six wooded acres with a 22-night minimum stay.";
 const intro2 =
   "Cheaper than a hotel for any stay over two weeks, with a real kitchen, free in-house washer and dryer, fast Wi-Fi, and no lease. Pay per night, locked in for the full stay.";
+
+const reasons = [
+  {
+    title: "25 minutes to base",
+    body: "Reasonable commute to Wright-Patt without paying downtown or off-base hotel rates near Fairborn. Multiple gate options depending on where on base you need to be.",
+  },
+  {
+    title: "When base TLF is full",
+    body: "Temporary Lodging Facility books up fast around PCS season and big TDY rotations. We're a real alternative when base lodging tells you they're full — without the hotel sticker shock.",
+  },
+  {
+    title: "Built for remote work / DOD telework",
+    body: "Fast Wi-Fi, whole-house coverage, a deck and quiet rooms for focus. Works for civilian contractors on telework days as well as anyone studying for an exam between rotations.",
+  },
+  {
+    title: "Real kitchen + laundry",
+    body: "Full shared kitchen so you're not eating out for 30 days straight. Free in-house washer and dryer for ABUs, OCPs, gym clothes, civilian work clothes — whatever.",
+  },
+];
+
+const faqs = [
+  {
+    q: "How far is the property from Wright-Patterson AFB?",
+    a: "About 25 minutes by car. We're in southwest Dayton; the base is on the northeast side of the metro. Highways move well outside rush hour. Multiple gate routing options depending on your destination on base.",
+  },
+  {
+    q: "Will my TLA / per-diem cover the stay?",
+    a: "Most likely yes — our rates run substantially below the local per-diem lodging ceiling. Standard rooms are $35/night, the Sycamore Suite is $44/night. Even with Airbnb fees, you're well under the typical Dayton-area lodging rate cap. Airbnb provides standard receipts for reimbursement.",
+  },
+  {
+    q: "Can I book for a family during PCS while waiting on housing?",
+    a: "Yes. You'd typically book the Sycamore Suite (master) plus one or two of the standard rooms depending on family size. All five rooms book individually, so you can build the right setup. Free parking, no extra-guest fees on long stays.",
+  },
+  {
+    q: "What about TDY where dates might shift?",
+    a: "Cancellation is flexible through the end of the current month. If your TDY gets extended, just extend the booking and your nightly rate stays the same — no renewal hike, no new contract.",
+  },
+  {
+    q: "Is the Wi-Fi good enough for DOD telework / VPN work?",
+    a: "Fast residential fiber-grade Wi-Fi, whole-house coverage. Plenty of guests run VPN sessions, video calls, and large file transfers. We can't speak to any specific CAC/VPN client compatibility from our side — that's on your unit's IT — but bandwidth and stability aren't the limiting factor.",
+  },
+  {
+    q: "Will I be sharing space with strangers?",
+    a: "It's a co-living-style house — five private bedrooms, two shared common bathrooms (the Sycamore Suite has its own en-suite), a shared kitchen, and a shared central deck. Guests tend to be travel nurses, contractors, military, and grad students — quiet, professional, on their own schedules.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
 ---
 
 <Base
   title="Extended Stay near Wright-Patterson AFB — Sycamore Getaway, Dayton OH"
   description="Long-stay rooms about 25 minutes from Wright-Patterson AFB. Private rooms, full kitchen, washer/dryer, fast Wi-Fi. Built for PCS, TDY, contractors, and military families."
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  {/* HERO */}
   <section class="max-w-4xl mx-auto px-5 py-20">
     <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{audience} · {target}</p>
     <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">{headline}</h1>
@@ -24,5 +83,158 @@ const intro2 =
       <a href="/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See the house</a>
       <a href="/availability/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Check availability</a>
     </div>
+  </section>
+
+  {/* WHY IT WORKS */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-5xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Why it works for military + contractors</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">A real alternative to base TLF or another month at a hotel.</h2>
+      <p class="mt-4 text-forest-800/90 max-w-3xl">
+        PCS season, big TDY rotations, civilian contractors on a months-long project, families
+        in town to visit someone stationed at Wright-Patt — they all hit the same problem:
+        base lodging is full or doesn't fit, and a hotel for 30+ nights gets ugly fast.
+      </p>
+      <div class="mt-8 grid sm:grid-cols-2 gap-5">
+        {reasons.map((r) => (
+          <div class="rounded-3xl border border-forest-100 bg-white p-6">
+            <h3 class="font-display text-xl text-forest-900">{r.title}</h3>
+            <p class="mt-2 text-sm text-forest-800/85 leading-relaxed">{r.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* THE MATH */}
+  <section class="max-w-5xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The math</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Well under the per-diem lodging ceiling.</h2>
+    <p class="mt-4 text-forest-800/90 max-w-3xl">
+      Off-base hotels in the Fairborn / Beavercreek area run $110-$160/night for anything decent,
+      plus parking and a $15+ resort fee on a lot of them. We're a fraction of that for any stay
+      of two weeks or more.
+    </p>
+
+    <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <div class="rounded-3xl bg-white border border-forest-100 p-6">
+        <p class="text-forest-600 text-sm">Off-base hotel (30 nights)</p>
+        <p class="font-display text-3xl text-forest-900 mt-2">~$4,400+</p>
+        <p class="mt-3 text-xs text-forest-700/80">~$130/night + parking. No kitchen, no in-room laundry.</p>
+      </div>
+      <div class="rounded-3xl bg-white border border-forest-100 p-6">
+        <p class="text-forest-600 text-sm">Short-term apartment</p>
+        <p class="font-display text-3xl text-forest-900 mt-2">~$1,700/mo</p>
+        <p class="mt-3 text-xs text-forest-700/80">All-in. 12-month lease typical — short-term means a premium.</p>
+      </div>
+      <div class="rounded-3xl bg-forest-700 text-cream-50 p-6 border-2 border-wood-500">
+        <p class="text-cream-200/80 text-sm">Sycamore Getaway</p>
+        <p class="font-display text-3xl mt-2">From $35/night</p>
+        <p class="mt-3 text-xs text-cream-100/90">Standard room ~$1,200/mo all-in. Sycamore Suite ~$1,500/mo.</p>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-3xl border border-forest-100 bg-cream-100 p-6">
+      <h3 class="font-display text-xl text-forest-900">Included — no add-ons, no resort fees</h3>
+      <ul class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-forest-800/90">
+        <li>• Fast Wi-Fi (telework, VPN, video calls)</li>
+        <li>• Free on-property parking — POV, rental, work truck</li>
+        <li>• Free in-house washer + dryer</li>
+        <li>• Full shared kitchen + cookware</li>
+        <li>• $0 cleaning fee</li>
+        <li>• Locked nightly rate for the full stay</li>
+        <li>• Self check-in via smart lock</li>
+        <li>• Flexible cancellation through end of month</li>
+      </ul>
+    </div>
+  </section>
+
+  {/* LOGISTICS */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-4xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Logistics</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">What you'll want to know up front.</h2>
+      <div class="mt-6 space-y-5 text-forest-800/90 leading-relaxed">
+        <p>
+          <strong class="text-forest-900">Drive to base:</strong> ~25 minutes to Wright-Patterson AFB from southwest Dayton.
+          You'll route up via I-75 or surface streets through Dayton, then east toward the base. Multiple gate
+          options depending on whether you're heading to Area A, Area B, or the hospital. Off-peak the
+          drive is closer to 22 minutes; rush hour can push it to 30.
+        </p>
+        <p>
+          <strong class="text-forest-900">Parking:</strong> Free, on the property. Room for a POV, a rental, a work truck —
+          whatever you're driving. No permits, no shared lot games.
+        </p>
+        <p>
+          <strong class="text-forest-900">Wi-Fi + telework:</strong> Fast residential connection with whole-house coverage. Good for
+          VPN sessions, video calls, large file transfers, and streaming when the workday ends. We can't certify
+          any specific DOD client — that's your IT — but bandwidth and reliability aren't the bottleneck.
+        </p>
+        <p>
+          <strong class="text-forest-900">Laundry:</strong> Free, in-house, unlimited. Hotels charge $3-5 a load or make you send
+          it out; we don't.
+        </p>
+        <p>
+          <strong class="text-forest-900">Families during PCS:</strong> If you need more than one room — family in town, kids — you can
+          book multiple rooms on Airbnb. The Sycamore Suite has a king and a private bath; the other four rooms
+          have king or queen beds and share two common bathrooms.
+        </p>
+        <p>
+          <strong class="text-forest-900">If TDY shifts:</strong> Extensions just extend the booking, same rate. Early end is handled
+          through flexible cancellation through end of month. No deposit at risk.
+        </p>
+        <p>
+          <strong class="text-forest-900">Receipts:</strong> Airbnb issues a clean receipt for every payment, which works for TLA, per-diem,
+          and contractor reimbursement.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ROOMS */}
+  <section class="max-w-4xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The rooms</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Five private rooms. Book one or several.</h2>
+    <p class="mt-4 text-forest-800/90 max-w-3xl">
+      Single travelers — TDY, contractor, geo-bachelor — typically book one room. Families during
+      PCS book the Sycamore Suite (master with king + private en-suite bath) plus one or two
+      standards. Four rooms have king beds; the Willow room has a queen. Common bathrooms (2)
+      are shared by the four standard rooms.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/rooms/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See all 5 rooms</a>
+      <a href="/the-house/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Tour the house</a>
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-3xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">FAQ</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Common questions from Wright-Patt guests.</h2>
+      <div class="mt-8 space-y-6">
+        {faqs.map((f) => (
+          <div class="rounded-3xl border border-forest-100 bg-white p-6">
+            <h3 class="font-display text-xl text-forest-900">{f.q}</h3>
+            <p class="mt-2 text-forest-800/90 leading-relaxed">{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CLOSING */}
+  <section class="max-w-3xl mx-auto px-5 py-20 text-center">
+    <h2 class="font-display text-3xl md:text-4xl text-forest-900">Check availability for your PCS or TDY dates.</h2>
+    <p class="mt-4 text-forest-800/90">
+      Five rooms, live calendar, 22-night minimum. Locked rate, no lease.
+    </p>
+    <a href="/availability/" class="mt-8 inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-7 py-3 font-medium transition-colors">
+      View live availability
+      <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="mt-6 text-sm text-forest-700/70">
+      Or <a href="/area/" class="underline">see the area</a> · <a href="/faq/" class="underline">general FAQ</a>
+    </p>
   </section>
 </Base>

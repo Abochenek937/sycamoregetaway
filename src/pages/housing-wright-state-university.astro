@@ -8,12 +8,71 @@ const intro =
   "About 20 minutes from Wright State, Sycamore Getaway offers private furnished rooms in a 5-bedroom house — built for students on rotations, interns at Wright-Patt, and grad students who need a real place to live without signing a year-long lease.";
 const intro2 =
   "Quiet enough to study. Cheap enough to make sense as an alternative to dorms or a sublease. King beds, fast Wi-Fi, full kitchen, washer + dryer, locked nightly rate for the length of your stay.";
+
+const reasons = [
+  {
+    title: "No lease, no roommate roulette",
+    body: "Sublease apps want a co-signer, a deposit, and a year of commitment. A dorm puts you with whoever the housing office picks. Here you book a private room by the night and that's it.",
+  },
+  {
+    title: "Quiet — actually quiet",
+    body: "22-night minimum means no weekend party traffic. Six wooded acres, no Greek row, no dorm hallway noise. Easier to actually finish a problem set or study for boards.",
+  },
+  {
+    title: "Real kitchen, real laundry",
+    body: "Full shared kitchen — cook your own food instead of burning a meal plan or eating out. Free in-house washer + dryer. Both add up to a meaningful amount of money over a semester.",
+  },
+  {
+    title: "Furnished, equipped, walk-in ready",
+    body: "Bed, dresser, linens, cookware, Wi-Fi already running. Show up with a suitcase, not a U-Haul. Especially useful for one-semester rotations, internships, or co-ops.",
+  },
+];
+
+const faqs = [
+  {
+    q: "How far from Wright State campus?",
+    a: "About 20 minutes by car. The drive routes through Dayton then east toward Fairborn. Wright State students often pair this with an internship or co-op at Wright-Patterson AFB (~25 minutes), which is one common reason people end up here for a semester.",
+  },
+  {
+    q: "Can I book just for a semester?",
+    a: "Yes. Most academic-term stays run somewhere between 90 and 130 nights. The 22-night minimum is the floor, not a typical stay length. Rate is locked when you book — no mid-semester hike.",
+  },
+  {
+    q: "Is this cheaper than the dorms or a sublease?",
+    a: "Depends on what you're comparing. Dorms vary a lot but typically run $700-$1,100/month before meal plans. A standard room here runs roughly $1,200/month all-in including Wi-Fi, utilities, laundry, and parking. The Sycamore Suite is closer to $1,500/month. You save on the meal plan because the kitchen is real, and there's no security deposit or lease break risk if you change plans.",
+  },
+  {
+    q: "Is it study-friendly?",
+    a: "Yes. Quiet residential area, no commercial noise, no party guests because of the 22-night minimum. Fast Wi-Fi covers the whole house including the deck. The Sycamore Suite has a desk; standards have surfaces you can work on. Most guests are professionals on contract — travel nurses, military, trades — not students partying, which makes the vibe pretty calm.",
+  },
+  {
+    q: "Do I need a car?",
+    a: "Realistically, yes. Southwest Dayton is a car-first area, and you're 20 minutes from Wright State. Public transit isn't a practical commute. Free parking on-site for as many vehicles as you have.",
+  },
+  {
+    q: "Can parents book this for a student?",
+    a: "Yes. Either the parent books on Airbnb and lists the student as the guest, or the student books and the parent pays. Receipts come from Airbnb for either flow.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
 ---
 
 <Base
   title="Wright State University Housing — Sycamore Getaway, Dayton OH"
   description="Off-campus furnished rooms about 20 minutes from Wright State University. Private rooms, full kitchen, fast Wi-Fi, washer/dryer. 22-night minimum, no lease."
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  {/* HERO */}
   <section class="max-w-4xl mx-auto px-5 py-20">
     <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{audience} · {target}</p>
     <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">{headline}</h1>
@@ -24,5 +83,150 @@ const intro2 =
       <a href="/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See the house</a>
       <a href="/availability/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Check availability</a>
     </div>
+  </section>
+
+  {/* WHY IT WORKS */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-5xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Why it works for students</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">For the semester, the rotation, or the co-op.</h2>
+      <p class="mt-4 text-forest-800/90 max-w-3xl">
+        We're not a dorm. We're not a year-long apartment. We're a quiet, furnished private room
+        you can book for one semester, one rotation, or one internship — and walk away from when
+        it's done.
+      </p>
+      <div class="mt-8 grid sm:grid-cols-2 gap-5">
+        {reasons.map((r) => (
+          <div class="rounded-3xl border border-forest-100 bg-white p-6">
+            <h3 class="font-display text-xl text-forest-900">{r.title}</h3>
+            <p class="mt-2 text-sm text-forest-800/85 leading-relaxed">{r.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* THE MATH */}
+  <section class="max-w-5xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The math</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">A semester here vs. the alternatives.</h2>
+    <p class="mt-4 text-forest-800/90 max-w-3xl">
+      Dorm cost varies by hall and meal plan. Subleases vary by neighborhood and how desperate
+      the original tenant is. Rough monthly all-in math:
+    </p>
+
+    <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <div class="rounded-3xl bg-white border border-forest-100 p-6">
+        <p class="text-forest-600 text-sm">Dorm + meal plan</p>
+        <p class="font-display text-3xl text-forest-900 mt-2">~$1,000-$1,400/mo</p>
+        <p class="mt-3 text-xs text-forest-700/80">Varies a lot by hall and plan. Roommate assigned.</p>
+      </div>
+      <div class="rounded-3xl bg-white border border-forest-100 p-6">
+        <p class="text-forest-600 text-sm">Sublease near campus</p>
+        <p class="font-display text-3xl text-forest-900 mt-2">~$700-$1,200/mo</p>
+        <p class="mt-3 text-xs text-forest-700/80">+ utilities, internet, furniture, deposit. Lease commitment.</p>
+      </div>
+      <div class="rounded-3xl bg-forest-700 text-cream-50 p-6 border-2 border-wood-500">
+        <p class="text-cream-200/80 text-sm">Sycamore Getaway</p>
+        <p class="font-display text-3xl mt-2">From $35/night</p>
+        <p class="mt-3 text-xs text-cream-100/90">Standard ~$1,200/mo all-in. Sycamore Suite ~$1,500/mo.</p>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-3xl border border-forest-100 bg-cream-100 p-6">
+      <h3 class="font-display text-xl text-forest-900">What's included — every stay</h3>
+      <ul class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-forest-800/90">
+        <li>• Fast Wi-Fi, whole-house</li>
+        <li>• Free on-property parking</li>
+        <li>• Free in-house washer + dryer</li>
+        <li>• Full shared kitchen (skip the meal plan)</li>
+        <li>• $0 cleaning fee</li>
+        <li>• No security deposit</li>
+        <li>• Furnished — bed, dresser, linens, cookware</li>
+        <li>• Locked rate for your whole stay</li>
+      </ul>
+    </div>
+  </section>
+
+  {/* LOGISTICS */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-4xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Logistics</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">For students, interns, and grad students.</h2>
+      <div class="mt-6 space-y-5 text-forest-800/90 leading-relaxed">
+        <p>
+          <strong class="text-forest-900">Commute:</strong> ~20 minutes to Wright State, ~25 minutes to Wright-Patterson AFB (common
+          for engineering interns), ~18 minutes to UD, ~18 minutes to Sinclair Community College, ~15 minutes
+          to downtown Dayton.
+        </p>
+        <p>
+          <strong class="text-forest-900">Studying:</strong> Quiet by design. Six wooded acres, no through-traffic, no dorm hallway noise.
+          22-night minimum keeps party traffic out. Fast Wi-Fi covers the deck — work outside when the weather's good.
+        </p>
+        <p>
+          <strong class="text-forest-900">Money:</strong> No security deposit. No furniture to buy. No utility setup. No moving truck. Standard
+          room is $35/night ($1,200/mo-ish all-in including Airbnb fees). For most semester-length stays this
+          beats a sublease once you actually add up the deposit, the lease break risk, and the buy-furniture-and-pots cost.
+        </p>
+        <p>
+          <strong class="text-forest-900">Food:</strong> Full shared kitchen — stove, oven, dishwasher, fridge with real space, cookware included.
+          Cooking for the week is a lot cheaper than a meal plan and way cheaper than DoorDash. Kroger is ~12 minutes east.
+        </p>
+        <p>
+          <strong class="text-forest-900">Laundry:</strong> Free in-house washer + dryer. No quarters, no waiting for a dorm machine to free up.
+        </p>
+        <p>
+          <strong class="text-forest-900">If plans change:</strong> Flexible cancellation through the end of the current month. Drop a class,
+          end an internship early, switch programs — you're not on the hook for the rest of the semester.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ROOMS */}
+  <section class="max-w-4xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The rooms</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Five private rooms.</h2>
+    <p class="mt-4 text-forest-800/90 max-w-3xl">
+      Four standard rooms — Buckeye, Oak, Maple, Willow — at $35/night. King beds in three of those;
+      Willow has a queen. Sycamore Suite (master) at $44/night has a king, a private en-suite bath,
+      and a desk — popular for grad students or anyone studying for boards/exams. Four standard rooms
+      share two common bathrooms.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/rooms/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See all 5 rooms</a>
+      <a href="/the-house/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Tour the house</a>
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-3xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">FAQ</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Common questions from students and parents.</h2>
+      <div class="mt-8 space-y-6">
+        {faqs.map((f) => (
+          <div class="rounded-3xl border border-forest-100 bg-white p-6">
+            <h3 class="font-display text-xl text-forest-900">{f.q}</h3>
+            <p class="mt-2 text-forest-800/90 leading-relaxed">{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CLOSING */}
+  <section class="max-w-3xl mx-auto px-5 py-20 text-center">
+    <h2 class="font-display text-3xl md:text-4xl text-forest-900">Book for the semester. Skip the lease.</h2>
+    <p class="mt-4 text-forest-800/90">
+      Five rooms, live calendar, 22-night minimum. Rate locked for your whole stay.
+    </p>
+    <a href="/availability/" class="mt-8 inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-7 py-3 font-medium transition-colors">
+      View live availability
+      <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="mt-6 text-sm text-forest-700/70">
+      Or <a href="/area/" class="underline">see the area</a> · <a href="/faq/" class="underline">general FAQ</a>
+    </p>
   </section>
 </Base>

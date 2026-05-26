@@ -8,12 +8,71 @@ const intro =
   "About 18 minutes from Miami Valley Hospital, Sycamore Getaway gives travel nurses a quiet, private room in a 5-bedroom house on six wooded acres. King bed, full shared kitchen, washer + dryer included, no cleaning fee, no 12-month lease.";
 const intro2 =
   "Designed around the realities of contract work — flexible cancellation, locked-in nightly rate, and the kind of quiet that makes day-sleeping after a night shift actually possible.";
+
+const reasons = [
+  {
+    title: "18 minutes to Miami Valley",
+    body: "Straight shot to the Miami Valley Hospital main campus. Also close to Miami Valley South (Centerville) if you float, and within ~20 min of Premier / Good Sam if you cross-credential.",
+  },
+  {
+    title: "Quiet for off-shift sleep",
+    body: "Six wooded acres in southwest Dayton, no through-traffic, no bar district nearby. 22-night minimum keeps the weekend-party crowd out.",
+  },
+  {
+    title: "Free washer + dryer",
+    body: "In-house, unlimited. Run scrubs through whenever — no laundromat run, no $4-a-load hotel laundry.",
+  },
+  {
+    title: "Flexible if your contract changes",
+    body: "Pay by the night with cancellation through end of month. Extend if your contract extends, shorten if it doesn't. No deposit, no lease break fees.",
+  },
+];
+
+const faqs = [
+  {
+    q: "How far is the drive to Miami Valley Hospital?",
+    a: "About 18 minutes via Edwin C. Moses Blvd and the surrounding surface streets. Off-peak it's closer to 15; in heavy traffic it might bump to 22. Quiet residential side roads most of the way.",
+  },
+  {
+    q: "Can I cancel if my contract is cut short?",
+    a: "Yes. Our flexible cancellation lets you cancel through the end of the current month. Far less risk than a 12-month apartment lease where you'd owe break fees on top of remaining rent.",
+  },
+  {
+    q: "Is it quiet enough to sleep during the day?",
+    a: "Yes. The property sits on six wooded acres, surrounded by trees, in a residential area with no commercial noise. The 22-night minimum means no weekend party bookings. Rooms are spread across a U-shaped layout so most don't share walls with another guest.",
+  },
+  {
+    q: "Are other healthcare workers staying there?",
+    a: "Often, yes. We host travel nurses from Miami Valley, Kettering Health, Premier, and Dayton Children's pretty regularly. The vibe is professional and quiet — people on real schedules.",
+  },
+  {
+    q: "Do you provide receipts for travel-nurse stipend documentation?",
+    a: "Airbnb issues a receipt for every payment, which works for stipend and per-diem tax documentation. If you need a custom breakdown, just message and we'll work it out.",
+  },
+  {
+    q: "What about parking?",
+    a: "Free parking on the property. Plenty of room for a personal vehicle; you'll never circle a block looking for a spot like you would near downtown.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
 ---
 
 <Base
   title="Travel Nurse Housing near Miami Valley Hospital — Dayton, OH"
   description="Quiet long-stay rooms 18 minutes from Miami Valley Hospital. Private rooms, full kitchen, washer/dryer, no lease. Built for 13-week travel nurse contracts."
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  {/* HERO */}
   <section class="max-w-4xl mx-auto px-5 py-20">
     <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{audience} · {target}</p>
     <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">{headline}</h1>
@@ -24,5 +83,153 @@ const intro2 =
       <a href="/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See the house</a>
       <a href="/availability/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Check availability</a>
     </div>
+  </section>
+
+  {/* WHY IT WORKS */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-5xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Why it fits</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Built around how travel nurses actually live.</h2>
+      <p class="mt-4 text-forest-800/90 max-w-3xl">
+        Most "extended stay" lodging is a hotel that lets you stay 30 nights. This isn't that.
+        It's a real house, set up around the actual rhythm of contract work — sleep, shift,
+        laundry, food, repeat — with a 22-night minimum that keeps the noise out.
+      </p>
+      <div class="mt-8 grid sm:grid-cols-2 gap-5">
+        {reasons.map((r) => (
+          <div class="rounded-3xl border border-forest-100 bg-white p-6">
+            <h3 class="font-display text-xl text-forest-900">{r.title}</h3>
+            <p class="mt-2 text-sm text-forest-800/85 leading-relaxed">{r.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* THE MATH */}
+  <section class="max-w-5xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The math</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Hotel rates don't make sense for a 13-week stay.</h2>
+    <p class="mt-4 text-forest-800/90 max-w-3xl">
+      Agency-provided housing is fine when it works. When you're taking the stipend instead,
+      every dollar matters. A standard room here runs roughly a third of a mid-range hotel for
+      the same 30 nights — and you get a kitchen, free laundry, and no surprise parking fees.
+    </p>
+
+    <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <div class="rounded-3xl bg-white border border-forest-100 p-6">
+        <p class="text-forest-600 text-sm">Hotel near downtown</p>
+        <p class="font-display text-3xl text-forest-900 mt-2">~$4,400+</p>
+        <p class="mt-3 text-xs text-forest-700/80">~$130/night + parking. No kitchen, no real laundry.</p>
+      </div>
+      <div class="rounded-3xl bg-white border border-forest-100 p-6">
+        <p class="text-forest-600 text-sm">1BR apartment</p>
+        <p class="font-display text-3xl text-forest-900 mt-2">~$1,700/mo</p>
+        <p class="mt-3 text-xs text-forest-700/80">After utilities, internet, furniture rental, deposit. 12-month lease.</p>
+      </div>
+      <div class="rounded-3xl bg-forest-700 text-cream-50 p-6 border-2 border-wood-500">
+        <p class="text-cream-200/80 text-sm">Sycamore Getaway</p>
+        <p class="font-display text-3xl mt-2">From $35/night</p>
+        <p class="mt-3 text-xs text-cream-100/90">Standard room ~$1,200/mo all-in. Sycamore Suite ~$1,500/mo.</p>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-3xl border border-forest-100 bg-cream-100 p-6">
+      <h3 class="font-display text-xl text-forest-900">Included with every stay</h3>
+      <ul class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-forest-800/90">
+        <li>• Fast Wi-Fi — whole house</li>
+        <li>• Free on-property parking</li>
+        <li>• Free, unlimited washer + dryer</li>
+        <li>• Full shared kitchen with cookware</li>
+        <li>• $0 cleaning fee</li>
+        <li>• Rate locked for the duration of your stay</li>
+        <li>• Self check-in (smart lock)</li>
+        <li>• Cancel through end of month</li>
+      </ul>
+    </div>
+  </section>
+
+  {/* LOGISTICS */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-4xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Logistics</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Things that matter mid-contract.</h2>
+      <div class="mt-6 space-y-5 text-forest-800/90 leading-relaxed">
+        <p>
+          <strong class="text-forest-900">Drive time:</strong> ~18 minutes to Miami Valley Hospital main campus. ~15 minutes
+          to Kettering Health Main if you cross-credential. ~20 minutes each to Premier Health / Good Samaritan,
+          Dayton Children's, and the Dayton VA. If you pick up bonus shifts at a different system, you don't have
+          to move.
+        </p>
+        <p>
+          <strong class="text-forest-900">Day-sleep environment:</strong> Quiet residential southwest Dayton, six wooded acres, no through-traffic.
+          The 22-night minimum keeps short-stay party traffic out. Rooms are spread around the U-shape of the house,
+          so you're not sharing a wall with someone running a blender at 7 a.m.
+        </p>
+        <p>
+          <strong class="text-forest-900">Laundry on your schedule:</strong> The washer and dryer are in-house and free. No need to plan around
+          a laundromat or wait for a hotel coin machine to free up. Most contract nurses run scrubs every 2-3 days.
+        </p>
+        <p>
+          <strong class="text-forest-900">Wi-Fi for charting and home:</strong> Fast enough for late-night charting catch-up, modules,
+          video calls home, streaming. Coverage works on the deck too if the weather's right.
+        </p>
+        <p>
+          <strong class="text-forest-900">Food:</strong> Kroger is ~12 minutes east. Full kitchen, dishwasher, fridge with plenty of room.
+          Cooking for the week is a lot easier on a stipend than DoorDash twice a day.
+        </p>
+        <p>
+          <strong class="text-forest-900">Contract changes:</strong> Extend by extending your booking — same nightly rate. End early with
+          flexible cancellation through the end of the month. No deposit at risk, no lease break.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ROOMS */}
+  <section class="max-w-4xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The rooms</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Five private rooms. King beds in four of them.</h2>
+    <p class="mt-4 text-forest-800/90 max-w-3xl">
+      Each room books individually on Airbnb. Four have king beds; the Willow room has a queen.
+      The Sycamore Suite is the master — king bed, private en-suite bathroom, and a desk. The
+      other four rooms share two common bathrooms in the house. Standard rooms start at $35/night;
+      Sycamore Suite is $44/night.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/rooms/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See all 5 rooms</a>
+      <a href="/the-house/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Tour the house</a>
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-3xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">FAQ</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Common questions from Miami Valley contract nurses.</h2>
+      <div class="mt-8 space-y-6">
+        {faqs.map((f) => (
+          <div class="rounded-3xl border border-forest-100 bg-white p-6">
+            <h3 class="font-display text-xl text-forest-900">{f.q}</h3>
+            <p class="mt-2 text-forest-800/90 leading-relaxed">{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CLOSING */}
+  <section class="max-w-3xl mx-auto px-5 py-20 text-center">
+    <h2 class="font-display text-3xl md:text-4xl text-forest-900">Check availability for your contract dates.</h2>
+    <p class="mt-4 text-forest-800/90">
+      Five rooms, live calendar, 22-night minimum. Lock in your rate for the whole assignment.
+    </p>
+    <a href="/availability/" class="mt-8 inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-7 py-3 font-medium transition-colors">
+      View live availability
+      <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="mt-6 text-sm text-forest-700/70">
+      Or <a href="/area/" class="underline">see the area</a> · <a href="/faq/" class="underline">general FAQ</a>
+    </p>
   </section>
 </Base>

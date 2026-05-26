@@ -8,12 +8,71 @@ const intro =
   "Sycamore Getaway is a quiet, modern 5-bedroom house in southwest Dayton, designed for guests staying 22 nights or more. Travel professionals, construction crews, students, military, and people in transition all live here in a single shared house on six wooded acres.";
 const intro2 =
   "Less than a hotel, no lease, no cleaning fee, no rent hikes. Furnished rooms, full kitchen, washer + dryer, fast Wi-Fi, and a calendar that's actually flexible.";
+
+const reasons = [
+  {
+    title: "22-night minimum, no maximum",
+    body: "Stay a month, six months, or longer. Nightly rate is locked when you book — no renewal hike at 30, 60, or 90 days.",
+  },
+  {
+    title: "Cheaper than a hotel by week two",
+    body: "Mid-range Dayton hotels run $120-$140/night plus parking and resort fees. Standard rooms here are $35/night, Sycamore Suite is $44.",
+  },
+  {
+    title: "No 12-month lease",
+    body: "An apartment makes sense if you're settling. If you're not — between houses, project-based work, waiting on a closing — a year-long lease and a deposit fight is overkill.",
+  },
+  {
+    title: "Actually furnished, actually equipped",
+    body: "Bed, linens, dresser, full shared kitchen with cookware, washer + dryer, fast Wi-Fi. Show up with a suitcase. You don't need to rent furniture, set up utilities, or buy a vacuum.",
+  },
+];
+
+const faqs = [
+  {
+    q: "Who actually stays here?",
+    a: "Travel nurses on contract at Kettering Health, Miami Valley, Premier, and Dayton Children's. Construction and trade crews working sites in the metro. Wright-Patt military and contractors. Wright State, Sinclair, and UD students. People between houses, in mid-relocation, or working remote for a season. The 22-night minimum filters out vacation traffic.",
+  },
+  {
+    q: "Why 22 nights minimum?",
+    a: "Two reasons. One, it keeps weekend party bookings out — which keeps the house quiet for the people actually living here. Two, the math only works for both sides at a longer stay. Shorter than that, you're better off at a regular short-term rental.",
+  },
+  {
+    q: "How does it compare to an apartment?",
+    a: "An apartment is cheaper on the per-night math if you're staying 12+ months. Below that, once you add utilities, water, internet, trash, renter's insurance, furniture rental, and the amortized deposit, an all-in 1BR in Dayton lands around $1,700/month — more than a standard room here, and you have to do all of it yourself plus sign a lease.",
+  },
+  {
+    q: "What about cancellations?",
+    a: "Flexible cancellation through the end of the current month. If your situation changes — house closing date moves, project ends early, contract gets cut — you're not on the hook for months you didn't stay.",
+  },
+  {
+    q: "Can I receive packages?",
+    a: "Yes. Amazon, USPS, FedEx, UPS all deliver to the property. Just confirm with your host the address format that works for your platform.",
+  },
+  {
+    q: "Is the address public?",
+    a: "No — per Airbnb policy, the exact address is shared with guests after booking. We can tell you we're in southwest Dayton, next to Jefferson Township High School, ~15 minutes from downtown.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
 ---
 
 <Base
   title="Extended Stay Housing in Dayton, Ohio — Sycamore Getaway"
   description="Long-stay rooms in southwest Dayton. Private furnished rooms, full kitchen, washer/dryer, fast Wi-Fi. 22-night minimum. No lease, no cleaning fee, locked nightly rate."
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  {/* HERO */}
   <section class="max-w-4xl mx-auto px-5 py-20">
     <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">{audience} · {target}</p>
     <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">{headline}</h1>
@@ -24,5 +83,155 @@ const intro2 =
       <a href="/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See the house</a>
       <a href="/availability/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Check availability</a>
     </div>
+  </section>
+
+  {/* WHY IT WORKS */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-5xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Why long-stay works here</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">The middle ground between a hotel and a lease.</h2>
+      <p class="mt-4 text-forest-800/90 max-w-3xl">
+        Hotels work for a week. Apartments work for a year. There's a big stretch of life in
+        between — relocations, project work, contract jobs, waiting on a house — where neither
+        of those is right. That gap is what this place is for.
+      </p>
+      <div class="mt-8 grid sm:grid-cols-2 gap-5">
+        {reasons.map((r) => (
+          <div class="rounded-3xl border border-forest-100 bg-white p-6">
+            <h3 class="font-display text-xl text-forest-900">{r.title}</h3>
+            <p class="mt-2 text-sm text-forest-800/85 leading-relaxed">{r.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* THE MATH */}
+  <section class="max-w-5xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The math</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">The real cost of staying somewhere for a month.</h2>
+    <p class="mt-4 text-forest-800/90 max-w-3xl">
+      A 30-night comparison, all-in. Hotel: room rate plus parking. Apartment: rent plus utilities,
+      water, internet, trash, renter's insurance, furniture rental, and amortized deposit. Us:
+      Airbnb price including guest fees, everything else included.
+    </p>
+
+    <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <div class="rounded-3xl bg-white border border-forest-100 p-6">
+        <p class="text-forest-600 text-sm">Mid-range hotel</p>
+        <p class="font-display text-3xl text-forest-900 mt-2">~$4,400+</p>
+        <p class="mt-3 text-xs text-forest-700/80">$130/night + parking. No kitchen, paid laundry.</p>
+      </div>
+      <div class="rounded-3xl bg-white border border-forest-100 p-6">
+        <p class="text-forest-600 text-sm">1BR apartment, all-in</p>
+        <p class="font-display text-3xl text-forest-900 mt-2">~$1,700/mo</p>
+        <p class="mt-3 text-xs text-forest-700/80">Rent + utilities + furniture + deposit. 12-month lease.</p>
+      </div>
+      <div class="rounded-3xl bg-forest-700 text-cream-50 p-6 border-2 border-wood-500">
+        <p class="text-cream-200/80 text-sm">Sycamore Getaway</p>
+        <p class="font-display text-3xl mt-2">From $35/night</p>
+        <p class="mt-3 text-xs text-cream-100/90">Standard ~$1,200/mo all-in. Master Suite ~$1,500/mo.</p>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-3xl border border-forest-100 bg-cream-100 p-6">
+      <h3 class="font-display text-xl text-forest-900">What's included</h3>
+      <ul class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-forest-800/90">
+        <li>• Fast Wi-Fi, whole-house</li>
+        <li>• Free on-property parking</li>
+        <li>• In-house washer + dryer, free + unlimited</li>
+        <li>• Full shared kitchen + cookware + dishwasher</li>
+        <li>• $0 cleaning fee</li>
+        <li>• Locked nightly rate for your whole stay</li>
+        <li>• Self check-in (smart lock)</li>
+        <li>• Cancel through end of month</li>
+      </ul>
+      <p class="mt-4 text-xs text-forest-700/80">
+        See the <a href="/" class="underline">full cost comparison table on the homepage</a> for the line-by-line breakdown.
+      </p>
+    </div>
+  </section>
+
+  {/* LOGISTICS */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-4xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Logistics</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">What you're getting, plainly.</h2>
+      <div class="mt-6 space-y-5 text-forest-800/90 leading-relaxed">
+        <p>
+          <strong class="text-forest-900">The property:</strong> Five-bedroom U-shaped house on six wooded acres, with a 55-acre
+          private forest bordering it (~61 effective wooded acres). Central deck, seasonal pool, sandy
+          clearing with a fire pit. Modern build, not a remodeled-farmhouse situation.
+        </p>
+        <p>
+          <strong class="text-forest-900">Location:</strong> Southwest Dayton, next to Jefferson Township High School. ~15 minutes
+          to downtown Dayton. ~30 minutes to Dayton International Airport. ~25 minutes to Wright-Patterson AFB.
+          ~15-20 minutes to all the major hospitals. ~12 minutes to Kroger.
+        </p>
+        <p>
+          <strong class="text-forest-900">Rooms:</strong> Five private bedrooms. Four with king beds (Sycamore, Buckeye, Oak, Maple),
+          one with a queen (Willow). The Sycamore Suite is the master — king bed, en-suite private bathroom,
+          desk. The other four share two common bathrooms.
+        </p>
+        <p>
+          <strong class="text-forest-900">Shared spaces:</strong> Full kitchen with stove, oven, fridge, dishwasher, coffee setup, and
+          plenty of counter. Central deck wraps the inside of the U. Pool seasonally. Laundry in-house.
+        </p>
+        <p>
+          <strong class="text-forest-900">Wi-Fi + work:</strong> Fast residential connection across the whole house and deck. Plenty
+          of guests work remote here full-time.
+        </p>
+        <p>
+          <strong class="text-forest-900">Check-in:</strong> Self check-in via smart lock. The host lives in a separate detached suite
+          on the property — accessible if needed, invisible otherwise.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ROOMS */}
+  <section class="max-w-4xl mx-auto px-5 py-20">
+    <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">The rooms</p>
+    <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Five rooms. Each one books separately.</h2>
+    <p class="mt-4 text-forest-800/90 max-w-3xl">
+      Every room is individually listed on Airbnb with its own live calendar. The Sycamore Suite
+      ($44/night) has the private en-suite bath and a desk. Standard rooms — Buckeye, Oak, Maple,
+      Willow — are $35/night. Four kings, one queen.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/rooms/" class="inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-6 py-3 font-medium transition-colors">See all 5 rooms</a>
+      <a href="/the-house/" class="inline-flex items-center rounded-full bg-cream-100 border border-forest-200 text-forest-800 px-6 py-3 font-medium hover:bg-forest-50 transition-colors">Tour the house</a>
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section class="bg-cream-100 border-y border-forest-100 py-16">
+    <div class="max-w-3xl mx-auto px-5">
+      <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">FAQ</p>
+      <h2 class="font-display text-3xl md:text-4xl mt-2 text-forest-900">Common questions about extended stays.</h2>
+      <div class="mt-8 space-y-6">
+        {faqs.map((f) => (
+          <div class="rounded-3xl border border-forest-100 bg-white p-6">
+            <h3 class="font-display text-xl text-forest-900">{f.q}</h3>
+            <p class="mt-2 text-forest-800/90 leading-relaxed">{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CLOSING */}
+  <section class="max-w-3xl mx-auto px-5 py-20 text-center">
+    <h2 class="font-display text-3xl md:text-4xl text-forest-900">Pick your dates. Lock your rate.</h2>
+    <p class="mt-4 text-forest-800/90">
+      Five rooms, live calendar, 22-night minimum. The rate you see is the rate for the whole stay.
+    </p>
+    <a href="/availability/" class="mt-8 inline-flex items-center rounded-full bg-forest-700 hover:bg-forest-800 text-white px-7 py-3 font-medium transition-colors">
+      View live availability
+      <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="mt-6 text-sm text-forest-700/70">
+      Or <a href="/area/" class="underline">see the area</a> · <a href="/faq/" class="underline">general FAQ</a>
+    </p>
   </section>
 </Base>
