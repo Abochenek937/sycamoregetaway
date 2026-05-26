@@ -8,9 +8,16 @@ const { bookings } = Astro.props;
 
 function pad(n: number) { return String(n).padStart(2, '0'); }
 
-const today = new Date();
-today.setUTCHours(0,0,0,0);
-const todayYmd = `${today.getUTCFullYear()}-${pad(today.getUTCMonth()+1)}-${pad(today.getUTCDate())}`;
+// Anchor "today" to America/New_York so day-rollover happens at midnight ET, not midnight UTC.
+const nyParts = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/New_York',
+  year: 'numeric', month: '2-digit', day: '2-digit',
+}).formatToParts(new Date());
+const nyYear  = Number(nyParts.find(p => p.type === 'year')!.value);
+const nyMonth = Number(nyParts.find(p => p.type === 'month')!.value);
+const nyDay   = Number(nyParts.find(p => p.type === 'day')!.value);
+const todayYmd = `${nyYear}-${pad(nyMonth)}-${pad(nyDay)}`;
+const today = new Date(Date.UTC(nyYear, nyMonth - 1, nyDay));
 
 type Month = { name: string; year: number; weeks: ({ ymd: string; day: number; blocked: boolean; past: boolean } | null)[][] };
 

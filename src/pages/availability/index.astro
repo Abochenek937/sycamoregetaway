@@ -15,8 +15,8 @@ const fetchedAt = availability[0]?.fetchedAt ? new Date(availability[0].fetchedA
     <p class="uppercase tracking-wider text-forest-600 text-xs font-medium">Availability</p>
     <h1 class="font-display text-4xl md:text-5xl mt-2 text-forest-900">Who's open, who's booked.</h1>
     <p class="mt-4 max-w-2xl text-forest-800/90">
-      Synced live from each room's Airbnb calendar. Updates a few times per day.
-      Last refresh: {fetchedAt.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}.
+      Pulled from each room's Airbnb calendar at build time. Refreshes a few times per day.
+      Last refreshed: {fetchedAt.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'America/New_York' })} ET.
     </p>
 
     <div class="mt-10">

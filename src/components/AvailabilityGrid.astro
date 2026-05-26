@@ -14,17 +14,25 @@ const orderedRooms = [...ROOMS].sort((a, b) => a.roomNumber - b.roomNumber);
 
 function pad(n: number) { return String(n).padStart(2, '0'); }
 
-const now = new Date();
-now.setUTCHours(0,0,0,0);
-const todayYmd = `${now.getUTCFullYear()}-${pad(now.getUTCMonth()+1)}-${pad(now.getUTCDate())}`;
+// "Today" is anchored to America/New_York (the property's timezone), not UTC,
+// so calendars don't roll over to the next day at 8pm ET when the server thinks it's already tomorrow UTC.
+const nyParts = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/New_York',
+  year: 'numeric', month: '2-digit', day: '2-digit',
+}).formatToParts(new Date());
+const nyYear  = Number(nyParts.find(p => p.type === 'year')!.value);
+const nyMonth = Number(nyParts.find(p => p.type === 'month')!.value);
+const nyDay   = Number(nyParts.find(p => p.type === 'day')!.value);
+const todayYmd = `${nyYear}-${pad(nyMonth)}-${pad(nyDay)}`;
+const now = new Date(Date.UTC(nyYear, nyMonth - 1, nyDay));
 
 type Cell = { ymd: string; day: number; isToday: boolean; isPast: boolean };
 type Month = { label: string; year: number; days: Cell[] };
 
 const months: Month[] = [];
 for (let i = 0; i < 2; i++) {
-  const first = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + i, 1));
-  const last = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + i + 1, 0));
+  const first = new Date(Date.UTC(nyYear, nyMonth - 1 + i, 1));
+  const last = new Date(Date.UTC(nyYear, nyMonth - 1 + i + 1, 0));
   const days: Cell[] = [];
   for (let d = 1; d <= last.getUTCDate(); d++) {
     const ymd = `${first.getUTCFullYear()}-${pad(first.getUTCMonth()+1)}-${pad(d)}`;
@@ -53,7 +61,7 @@ const fetchedAgo = (() => {
 
 <div class="space-y-6">
   <div class="flex items-center justify-between flex-wrap gap-3">
-    <p class="text-sm text-forest-700/80">Live from Airbnb · last sync {fetchedAgo}</p>
+    <p class="text-sm text-forest-700/80">Synced from Airbnb · calendar last built {fetchedAgo}</p>
     <div class="flex items-center gap-4 text-xs">
       <span class="flex items-center gap-1.5"><span class="w-4 h-4 rounded bg-forest-200"></span>Available</span>
       <span class="flex items-center gap-1.5"><span class="w-4 h-4 rounded bg-wood-500"></span>Booked</span>
